@@ -23,17 +23,15 @@ jobs:
         with:
           node-version: '20'
           
-      - name: Generate Dashboard SVGs
+      - name: Generate Dashboard SVG
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          node scripts/generate-engineering-stats.js
-          node scripts/generate-language-stats.js
+        run: node scripts/generate-dashboard.js
           
       - name: Check for changes
         id: changes
         run: |
-          if git diff --quiet assets/; then
+          if git diff --quiet assets/github-dashboard.svg; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
@@ -44,6 +42,6 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/engineering-stats.svg assets/top-languages.svg
-          git commit -m "chore: update dashboard SVGs [skip ci]"
+          git add assets/github-dashboard.svg
+          git commit -m "chore: update dashboard SVG [skip ci]"
           git push

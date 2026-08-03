@@ -29,14 +29,14 @@
   <div style="font-size:12px;color:#94A3B8;letter-spacing:0.5px;margin-top:4px;">→ Connect with me directly</div>
 </div>
 
-<!-- ENGINEERING STATS -->
+<!-- UNIFIED DASHBOARD -->
 <div align="center" style="margin-top:32px;">
-  <img src="./assets/engineering-stats.svg" width="100%" alt="Engineering Stats" />
+  <img src="./assets/github-dashboard.svg" width="100%" alt="GitHub Dashboard" />
 </div>
 
-<!-- TOP LANGUAGES -->
+<!-- STREAK STATS -->
 <div align="center" style="margin-top:24px;">
-  <img src="./assets/top-languages.svg" width="100%" alt="Top Languages" />
+  <img width="100%" src="https://streak-stats.demolab.com/?user=Jay-Prajapati01&hide_border=true&background=09090B&stroke=22D3EE&ring=A78BFA&fire=10B981&currStreakLabel=22D3EE&sideLabels=94A3B8&currStreakNum=F8FAFC&sideNums=F8FAFC&dates=64748B&titleColor=22D3EE&card_width=1180" alt="Streak Stats" />
 </div>
 
 <!-- SNAKE ANIMATION -->

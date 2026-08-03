@@ -61,9 +61,17 @@ async function getUser() {
   return fetchWithRetry(`/users/${USERNAME}`);
 }
 
-async function getContributions() {
-  const data = await fetchWithRetry(`/users/${USERNAME}/events?per_page=100`);
-  return data.filter(e => e.type === 'PushEvent').length;
+async function getEvents() {
+  const events = [];
+  let page = 1;
+  while (page <= 10) {
+    const data = await fetchWithRetry(`/users/${USERNAME}/events?per_page=100&page=${page}`);
+    if (!data.length) break;
+    events.push(...data);
+    if (data.length < 100) break;
+    page++;
+  }
+  return events;
 }
 
 async function getLanguages(repos) {
@@ -86,4 +94,4 @@ async function getLanguages(repos) {
   return langMap;
 }
 
-module.exports = { getAllRepos, getUser, getContributions, getLanguages };
+module.exports = { getAllRepos, getUser, getEvents, getLanguages };
