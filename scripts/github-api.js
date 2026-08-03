@@ -1,4 +1,4 @@
-import { get, request } from 'https';
+const https = require('https');
 
 const GITHUB_TOKEN = process.env.GH_STATS_TOKEN;
 const USERNAME = 'Jay-Prajapati01';
@@ -14,7 +14,7 @@ const options = {
 
 function fetchJSON(path) {
   return new Promise((resolve, reject) => {
-    const req = get({ ...options, path }, (res) => {
+    const req = https.get({ ...options, path }, (res) => {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
@@ -94,7 +94,7 @@ async function getLanguages(repos) {
 function fetchGraphQL(query) {
   return new Promise((resolve, reject) => {
     const postData = JSON.stringify({ query });
-    const req = request({
+    const req = https.request({
       hostname: 'api.github.com',
       path: '/graphql',
       method: 'POST',
@@ -156,4 +156,11 @@ try {
 }
 }
 
-module.exports = { getAllRepos, getUser, getPRs, getIssues, getLanguages, getContributions };
+module.exports = {
+  getAllRepos,
+  getUser,
+  getPRs,
+  getIssues,
+  getLanguages,
+  getContributions
+};
