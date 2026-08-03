@@ -24,16 +24,19 @@ jobs:
       - name: Generate Contribution Streak SVG
         env:
           GH_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/generate-streak.js
 
       - name: Generate Engineering Stats SVG
         env:
           GH_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/generate-engineering-stats.js
 
       - name: Generate Language Stats SVG
         env:
           GH_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/generate-language-stats.js
 
       - name: Check for changes
