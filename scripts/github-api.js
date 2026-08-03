@@ -5,6 +5,10 @@ const path = require('path');
 const GITHUB_TOKEN = process.env.GH_STATS_TOKEN;
 const USERNAME = 'Jay-Prajapati01';
 
+if (!GITHUB_TOKEN) {
+  throw new Error('GH_STATS_TOKEN is missing — please check your repository secrets.');
+}
+
 const CACHE_FILE = path.join(__dirname, '..', '.api-cache.json');
 
 const options = {
@@ -37,13 +41,29 @@ function writeCache(cache) {
 
 async function getCachedOrFetch(key, fetchFn) {
   const cache = readCache();
-  if (cache[key] !== undefined) {
-    console.log(`[cache] Using cached data for key: ${key}`);
-    return cache[key];
+  
+  // Check if we have a valid, non-empty cached response
+  if (cache[key] !== undefined && cache[key] !== null) {
+    const isArrayEmpty = Array.isArray(cache[key]) && cache[key].length === 0;
+    const isObjectEmpty = typeof cache[key] === 'object' && Object.keys(cache[key]).length === 0;
+    if (!isArrayEmpty && !isObjectEmpty) {
+      console.log(`[cache] Using cached data for key: ${key}`);
+      return cache[key];
+    }
   }
+  
   const data = await fetchFn();
-  cache[key] = data;
-  writeCache(cache);
+  
+  // Only cache if the response is non-null and non-empty
+  if (data !== null && data !== undefined) {
+    const isArrayEmpty = Array.isArray(data) && data.length === 0;
+    const isObjectEmpty = typeof data === 'object' && Object.keys(data).length === 0;
+    if (!isArrayEmpty && !isObjectEmpty) {
+      cache[key] = data;
+      writeCache(cache);
+    }
+  }
+  
   return data;
 }
 
@@ -53,6 +73,10 @@ function fetchJSON(path) {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
+        if (res.statusCode >= 400) {
+          reject(new Error(`GitHub API returned status ${res.statusCode}: ${data}`));
+          return;
+        }
         try {
           resolve(JSON.parse(data));
         } catch (e) {
@@ -85,7 +109,7 @@ async function getAllRepos() {
     let page = 1;
     while (true) {
       const data = await fetchWithRetry(`/users/${USERNAME}/repos?per_page=100&page=${page}&type=all`);
-      if (!data.length) break;
+      if (!data || !data.length) break;
       repos.push(...data);
       if (data.length < 100) break;
       page++;
@@ -193,14 +217,9 @@ query {
   }
 }
 `;
-    try {
-      const res = await fetchGraphQL(query);
-      if (res.errors) throw new Error(res.errors[0].message);
-      return res.data?.user?.contributionsCollection || null;
-    } catch (e) {
-      console.error('Failed to fetch raw contribution data:', e.message);
-      return null;
-    }
+    const res = await fetchGraphQL(query);
+    if (res.errors) throw new Error(res.errors[0].message);
+    return res.data?.user?.contributionsCollection || null;
   });
 }
 
