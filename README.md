@@ -1,27 +1,44 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/main/particle_reconstruction.gif" width="100%" alt="Particle Animation" />
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<!-- LEFT PANEL: GIF -->
+<td width="38%" valign="top" style="padding:0;margin:0;border:0;">
+  <img src="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/main/assets/particle_reconstruction.gif" width="100%" alt="Particle Portrait" style="display:block;margin:0;padding:0;border:0;" />
+
+  <!-- CONNECT SECTION (below GIF, left column) -->
+  <div style="padding:16px 12px 0 12px;font-family:'JetBrains Mono','IBM Plex Mono','Fira Code','SF Mono','Menlo',monospace;">
+    <div style="font-size:13px;color:#22D3EE;font-weight:700;letter-spacing:1.5px;margin-bottom:12px;">CONNECT</div>
+    <div style="font-size:11px;color:#94A3B8;margin-bottom:4px;">Email</div>
+    <div style="font-size:12px;color:#F8FAFC;margin-bottom:12px;">jay.190819@gmail.com</div>
+    <div style="font-size:11px;color:#94A3B8;margin-bottom:4px;">LinkedIn</div>
+    <div style="font-size:12px;color:#F8FAFC;margin-bottom:12px;">linkedin.com/in/jay-prajapati-826902298</div>
+    <div style="font-size:11px;color:#94A3B8;margin-bottom:4px;">GitHub</div>
+    <div style="font-size:12px;color:#F8FAFC;">github.com/Jay-Prajapati01</div>
+  </div>
+</td>
+
+<!-- RIGHT PANEL: SVG -->
+<td width="62%" valign="top" style="padding:0;margin:0;border:0;">
+  <img src="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/main/assets/terminal-right.svg" width="100%" alt="Terminal Info" style="display:block;margin:0;padding:0;border:0;" />
+</td>
+</tr>
+</table>
+
+<!-- BOTTOM CTA -->
+<div align="center" style="margin-top:24px;font-family:'JetBrains Mono','IBM Plex Mono','Fira Code','SF Mono','Menlo',monospace;">
+  <div style="font-size:12px;color:#94A3B8;letter-spacing:0.5px;">↓ Explore my projects below</div>
+  <div style="font-size:12px;color:#94A3B8;letter-spacing:0.5px;margin-top:4px;">→ Connect with me directly</div>
 </div>
 
-<div align="center">
-
-**SYSTEM.INFO**
-
-Role: AI Engineer / Full-Stack Developer  
-Location: Ahmedabad, India  
-Status: Building + Learning + Shipping  
-Focus: AI products, automation, enterprise software  
-Tools: Next.js, TypeScript, FastAPI, Docker, PostgreSQL, Qdrant, Redis
-
-</div>
-
-<div align="center">
-  <img width="100%" src="https://streak-stats.demolab.com/?user=Jay-Prajapati01&hide_border=true&background=0A101F&stroke=22D3EE&ring=A78BFA&fire=10B981&currStreakLabel=22D3EE&sideLabels=94A3B8&currStreakNum=F8FAFC&sideNums=F8FAFC&dates=64748B&titleColor=22D3EE&card_width=1180" alt="streak" />
+<!-- STATS SECTION -->
+<div align="center" style="margin-top:32px;">
+  <img width="100%" src="https://streak-stats.demolab.com/?user=Jay-Prajapati01&hide_border=true&background=09090B&stroke=22D3EE&ring=A78BFA&fire=10B981&currStreakLabel=22D3EE&sideLabels=94A3B8&currStreakNum=F8FAFC&sideNums=F8FAFC&dates=64748B&titleColor=22D3EE&card_width=1180" alt="streak" />
   <br/>
-  <img width="49%" src="https://YOUR-INSTANCE.vercel.app/api?username=Jay-Prajapati01&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=0A101F&card_width=500" alt="stats" />
-  <img width="49%" src="https://YOUR-INSTANCE.vercel.app/api/top-langs/?username=Jay-Prajapati01&layout=compact&langs_count=8&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=0A101F&card_width=500" alt="top langs" />
+  <img width="49%" src="https://YOUR-INSTANCE.vercel.app/api?username=Jay-Prajapati01&show_icons=true&count_private=true&include_all_commits=true&hide_rank=true&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=09090B&card_width=500" alt="stats" />
+  <img width="49%" src="https://YOUR-INSTANCE.vercel.app/api/top-langs/?username=Jay-Prajapati01&layout=compact&langs_count=8&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=09090B&card_width=500" alt="top langs" />
 </div>
 
-<div align="center">
+<!-- SNAKE ANIMATION -->
+<div align="center" style="margin-top:24px;">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/output/github-snake-dark.svg" />
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/output/github-snake.svg" />
@@ -29,16 +46,13 @@ Tools: Next.js, TypeScript, FastAPI, Docker, PostgreSQL, Qdrant, Redis
   </picture>
 </div>
 
-<div align="center">
+<!-- SOCIAL BADGES -->
+<div align="center" style="margin-top:24px;margin-bottom:24px;">
   <a href="YOUR_LINKEDIN_URL">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
   &nbsp;&nbsp;
-  <a href="YOUR_INSTAGRAM_URL">
-    <img src="https://img.shields.io/badge/Instagram-0A101F?style=for-the-badge&logo=instagram&logoColor=A78BFA&labelColor=0A101F" alt="Instagram" />
-  </a>
-  &nbsp;&nbsp;
-  <a href="mailto:YOUR_EMAIL">
-    <img src="https://img.shields.io/badge/Email-0A101F?style=for-the-badge&logo=gmail&logoColor=10B981&labelColor=0A101F" alt="Email" />
+  <a href="mailto:jay.190819@gmail.com">
+    <img src="https://img.shields.io/badge/Email-09090B?style=for-the-badge&logo=gmail&logoColor=10B981&labelColor=09090B" alt="Email" />
   </a>
 </div>
