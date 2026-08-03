@@ -18,14 +18,12 @@ node_modules/
 .vscode/
 .idea/
 
-# Images & Videos
+# Images
 *.png
 *.jpg
 *.jpeg
 *.gif
-*.mp4
-*.webm
-*.svg
+*.webp
 
 # Temporary
 *.tmp
