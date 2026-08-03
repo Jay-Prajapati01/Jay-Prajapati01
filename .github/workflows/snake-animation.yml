@@ -21,7 +21,7 @@ jobs:
         with:
           github_user_name: Jay-Prajapati01
           outputs: |
-            dist/snake-dark.svg?color_snake=#22D3EE&color_dots=#09090B,#1a1a2e,#22D3EE,#10B981
+            dist/snake-dark.svg?color_snake=#22D3EE&color_dots=#1E293B,#334155,#22D3EE,#10B981
             dist/snake-light.svg?color_snake=#0891B2&color_dots=#FFFFFF,#E2E8F0,#0891B2,#059669
           
       - name: Deploy to output branch
