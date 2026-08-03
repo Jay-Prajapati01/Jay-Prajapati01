@@ -48,7 +48,7 @@ async function generate() {
 
   // ─── SVG layout ────────────────────────────────────────────────────────────
   // Fixed height to match top-languages card
-  const metricH = 52;
+  const metricH = 43;
   const HEIGHT  = 528;
 
   let svg = openCard(WIDTH, HEIGHT);
@@ -63,7 +63,7 @@ async function generate() {
   svg += createSeparator(96, WIDTH);
 
   // Metrics
-  let y = 96 + 34;
+  let y = 122;
   for (const { label, value } of metrics) {
     const num     = Number(value) || 0;
     const barW    = WIDTH - PAD * 2;

@@ -1,6 +1,6 @@
 const https = require('https');
 
-const GITHUB_TOKEN = process.env.GH_STATS_TOKEN;
+const GITHUB_TOKEN = process.env.GH_STATS_TOKEN || process.env.GITHUB_TOKEN;
 const USERNAME = 'Jay-Prajapati01';
 
 const options = {
