@@ -33,9 +33,16 @@ function iconFlame(x, y, color, scale) {
 }
 
 function iconTrophy(x, y, color, scale) {
-  // Native bounding: x 1–11, y 1–10 → ~10×9 native
+  // Premium symmetric trophy SVG built inside a 24x24 box
   return `<g transform="translate(${x},${y}) scale(${scale})">
-    <path d="M3 1h6v1h2v2c0 1-1 2-2 2h0c0 1-1 2-2 2v1h2v1H3v-1h2V6c-1 0-2-1-2-2H3c-1 0-2-1-2-2V2h2V1z" fill="${color}"/>
+    <!-- Cup Body -->
+    <path d="M6 2h12v7c0 3.3-2.7 6-6 6s-6-2.7-6-6V2z" fill="${color}" />
+    <!-- Pedestal & Base -->
+    <path d="M10 15v4h-3v2h10v-2h-3v-4h-4z" fill="${color}" />
+    <!-- Left Handle -->
+    <path d="M6 4.5c-2.2 0-3.5 1.2-3.5 3s1.3 3 3.5 3" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" />
+    <!-- Right Handle -->
+    <path d="M18 4.5c2.2 0 3.5 1.2 3.5 3s-1.3 3-3.5 3" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" />
   </g>`;
 }
 
@@ -122,10 +129,10 @@ function buildStreakSVG(stats) {
   }
 
   // ─── Column 3: Longest Streak ──────────────────────────────────────────────
-  // Trophy icon: scale 4.7 (~35% increase from 3.5) -> rendered ~47×42.3
-  const trophyScale = 4.7;
-  const trophyNativeW = 10;
-  const trophyX = c3Mid - (trophyNativeW * trophyScale) / 2;
+  // Trophy icon: scale 2.2 (rendered ~52.8x52.8) -> centered horizontally and vertically
+  const trophyScale = 2.2;
+  const trophyNativeSize = 24;
+  const trophyX = c3Mid - (trophyNativeSize * trophyScale) / 2;
   svg += iconTrophy(trophyX, 52, '#EAB308', trophyScale);
   svg += `
   <text x="${c3Mid}" y="142" text-anchor="middle" font-size="44" fill="${COLORS.value}" font-weight="700">${stats.longestStreak}</text>
