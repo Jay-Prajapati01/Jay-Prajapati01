@@ -1,53 +1,89 @@
-const fs = require('fs');
+'use strict';
+
+const fs   = require('fs');
 const path = require('path');
+
 const { getAllRepos, getLanguages } = require('./github-api');
-const { processLanguages } = require('./data-processor');
-const { createCard, escapeXml, COLORS, getLangColor } = require('./svg-utils');
+const { processLanguages }         = require('./data-processor');
+const {
+  openCard, closeCard, createHeader,
+  createSeparator, createSectionTitle,
+  createSegmentedBar, createLangLegendItem,
+  createFooter, getLangColor,
+  COLORS, escapeXml
+} = require('./svg-utils');
+
+// ─── Layout constants ────────────────────────────────────────────────────────
+const WIDTH      = 495;
+const PAD        = 32;
+const BAR_H      = 10;
+const LEGEND_COL = 2;
+const LEGEND_ROW_H = 36;
 
 async function generate() {
-  try {
-    console.log('Fetching repository data...');
-    const repos = await getAllRepos();
-    
-    console.log('Fetching language data...');
-    const langMap = await getLanguages(repos);
-    const languages = processLanguages(langMap);
-    console.log('Languages processed:', languages);
-    
-    const width = 580;
-    const barHeight = 24;
-    const rowHeight = 60;
-    const startY = 85;
-    const height = startY + (languages.length * rowHeight) + 40;
-    
-    let svg = createCard(width, height);
-    
-    svg += `\n  <text x="32" y="48" font-size="13" fill="${COLORS.header}" font-weight="700" letter-spacing="1.5">${escapeXml('TOP.LANGUAGES')}</text>`;
-    svg += `\n  <line x1="32" y1="58" x2="${width - 32}" y2="58" stroke="${COLORS.separator}" stroke-width="0.5"/>`;
-    
-    let y = startY;
-    for (const lang of languages) {
-      const color = getLangColor(lang.name);
-      const barWidth = (parseFloat(lang.percentage) / 100) * (width - 200);
-      
-      svg += `\n  <text x="32" y="${y}" font-size="12" fill="${COLORS.value}">${escapeXml(lang.name)}</text>`;
-      svg += `\n  <text x="${width - 32}" y="${y}" font-size="11" fill="${COLORS.label}" text-anchor="end">${escapeXml(lang.percentage)}%</text>`;
-      svg += `\n  <rect x="32" y="${y + 10}" width="${width - 64}" height="${barHeight}" rx="4" fill="${COLORS.separator}"/>`;
-      svg += `\n  <rect x="32" y="${y + 10}" width="${barWidth}" height="${barHeight}" rx="4" fill="${color}"/>`;
-      
-      y += rowHeight;
-    }
-    
-    svg += '\n</svg>';
-    
-    const outPath = path.join(__dirname, '..', 'assets', 'top-languages.svg');
-    fs.mkdirSync(path.dirname(outPath), { recursive: true });
-    fs.writeFileSync(outPath, svg);
-    console.log('Generated:', outPath);
-  } catch (error) {
-    console.error('Failed to generate language stats:', error);
-    process.exit(1);
+  console.log('[language-stats] Fetching data…');
+
+  const repos     = await getAllRepos();
+  const langMap   = await getLanguages(repos);
+  const languages = processLanguages(langMap);
+
+  console.log('[language-stats] Languages:', languages);
+
+  const today = new Date().toISOString().split('T')[0];
+
+  // ─── Layout maths ──────────────────────────────────────────────────────────
+  const legendRows = Math.ceil(languages.length / LEGEND_COL);
+  const HEIGHT     = 48          // header
+                   + 28          // section title gap
+                   + 20          // separator + bar area
+                   + BAR_H + 20  // bar + gap
+                   + legendRows * LEGEND_ROW_H
+                   + 36;         // footer
+
+  let svg = openCard(WIDTH, HEIGHT);
+
+  // Header
+  svg += createHeader(WIDTH, 'MOST.USED.LANGUAGES', today);
+
+  // Section label
+  svg += createSectionTitle(88, 'By byte count · excluding HTML & CSS');
+  svg += createSeparator(96, WIDTH);
+
+  // Segmented bar
+  const barY  = 110;
+  const barW  = WIDTH - PAD * 2;
+  const segs  = languages.map(l => ({
+    color:    getLangColor(l.name),
+    fraction: parseFloat(l.percentage) / 100
+  }));
+  svg += createSegmentedBar(PAD, barY, barW, segs, BAR_H);
+
+  // Legend grid
+  let legendY = barY + BAR_H + 28;
+  const colW  = Math.floor(barW / LEGEND_COL);
+
+  for (let i = 0; i < languages.length; i++) {
+    const lang = languages[i];
+    const col  = i % LEGEND_COL;
+    const row  = Math.floor(i / LEGEND_COL);
+    const lx   = PAD + col * colW;
+    const ly   = legendY + row * LEGEND_ROW_H;
+    svg += createLangLegendItem(lx, ly, lang.name, lang.percentage, getLangColor(lang.name));
   }
+
+  // Footer
+  svg += createFooter(WIDTH, HEIGHT, today);
+
+  svg += closeCard();
+
+  // ─── Write file ─────────────────────────────────────────────────────────────
+  const outPath = path.join(__dirname, '..', 'assets', 'top-languages.svg');
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  fs.writeFileSync(outPath, svg, 'utf8');
+  console.log('[language-stats] Written:', outPath);
 }
 
-generate();
+generate().catch(err => {
+  console.error('[language-stats] Fatal:', err);
+  process.exit(1);
+});

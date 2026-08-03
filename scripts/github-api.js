@@ -167,10 +167,6 @@ try {
     throw new Error(res.errors[0].message);
   }
 
-  console.log("========== GRAPHQL RESPONSE ==========");
-  console.log(JSON.stringify(res.data.user.contributionsCollection, null, 2));
-  console.log("======================================");
-
   return res.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions || 0;
 
 } catch (e) {

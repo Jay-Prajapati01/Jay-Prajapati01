@@ -7,7 +7,7 @@
 </div>
 
 <div align="center">
-<img src="./assets/github-dashboard.svg" width="100%" alt="GitHub Dashboard" />
+<img src="./assets/engineering-stats.svg" width="49%" alt="Engineering Stats" /><img src="./assets/top-languages.svg" width="49%" alt="Top Languages" />
 </div>
 
 <div align="center">
