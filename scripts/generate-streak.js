@@ -33,16 +33,16 @@ function iconFlame(x, y, color, scale) {
 }
 
 function iconTrophy(x, y, color, scale) {
-  // Premium symmetric trophy SVG built inside a 24x24 box
-  return `<g transform="translate(${x},${y}) scale(${scale})">
-    <!-- Cup Body -->
-    <path d="M6 2h12v7c0 3.3-2.7 6-6 6s-6-2.7-6-6V2z" fill="${color}" />
-    <!-- Pedestal & Base -->
-    <path d="M10 15v4h-3v2h10v-2h-3v-4h-4z" fill="${color}" />
+  // Bold solid flat premium trophy icon inside a 24x24 box
+  return `<g transform="translate(${x},${y}) scale(${scale})" fill="${color}">
     <!-- Left Handle -->
-    <path d="M6 4.5c-2.2 0-3.5 1.2-3.5 3s1.3 3 3.5 3" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" />
+    <path d="M2 3c0-1.1.9-2 2-2h2v6H4c-1.1 0-2-.9-2-2V3z" opacity="0.8" />
     <!-- Right Handle -->
-    <path d="M18 4.5c2.2 0 3.5 1.2 3.5 3s-1.3 3-3.5 3" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" />
+    <path d="M18 1h2c1.1 0 2 .9 2 2v2c0 1.1-.9 2-2 2h-2V1z" opacity="0.8" />
+    <!-- Cup Body -->
+    <path d="M6 1h12v7c0 3.3-2.7 6-6 6s-6-2.7-6-6V1z" />
+    <!-- Pedestal & Base -->
+    <path d="M10 14v5H7v2h10v-2h-3v-5h-4z" />
   </g>`;
 }
 
@@ -70,7 +70,6 @@ function buildStreakSVG(stats) {
   <line x1="${col3X}" y1="55" x2="${col3X}" y2="${HEIGHT - 42}" stroke="${COLORS.separator}" stroke-width="1"/>`;
 
   // ─── Column 1: Total Contributions ─────────────────────────────────────────
-  // Grid icon: scale 3.8 → rendered ~42×42
   const gridScale = 3.8;
   const gridW = 11 * gridScale;
   const gridX = c1Mid - gridW / 2;
@@ -88,11 +87,6 @@ function buildStreakSVG(stats) {
     const cy = 118;
     const r  = 50;
     const strokeW = 6;
-    
-    // Mathematical arc calculation for gap at 12 o'clock (opening from 288 degrees to 252 degrees)
-    // x1 = cx + r*cos(288), y1 = cy + r*sin(288) -> (505.45, 70.45)
-    // x2 = cx + r*cos(252), y2 = cy + r*sin(252) -> (474.55, 70.45)
-    // Circumference of 324 degrees arc length = 2 * PI * 50 * (324/360) = 282.7
     const arcLength = 283;
 
     // Teal progress ring with top gap
@@ -101,12 +95,9 @@ function buildStreakSVG(stats) {
       <animate attributeName="stroke-dashoffset" from="${arcLength}" to="0" dur="1s" fill="freeze"/>
     </path>`;
 
-    // Flame: scale 3.2 (rendered ~22.4px height)
-    // Perfectly centered horizontally on 12 o'clock position (cx = 490)
-    // Vertical center exactly at circle edge (y = 68). Native center y ≈ 4.5 -> y_t = 68 - 4.5 * 3.2 = 53.6
     const flameScale = 3.2;
-    const flameX = cx - 6.25 * flameScale;  // 470
-    const flameY = (cy - r) - 4.5 * flameScale;  // 53.6
+    const flameX = cx - 6.25 * flameScale;
+    const flameY = (cy - r) - 4.5 * flameScale;
     svg += iconFlame(flameX, flameY, '#F97316', flameScale);
 
     // Number centered inside the ring
