@@ -1,6 +1,6 @@
 const https = require('https');
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_TOKEN = process.env.GH_STATS_TOKEN;
 const USERNAME = 'Jay-Prajapati01';
 
 const options = {
@@ -137,16 +137,22 @@ async function getContributions() {
       }
     }
   `;
-  try {
-    const res = await fetchGraphQL(query);
-    if (res.errors) {
-      throw new Error(res.errors[0].message);
-    }
-    return res.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions || 0;
-  } catch (e) {
-    console.error('Failed to fetch contributions:', e.message);
-    return 0;
+try {
+  const res = await fetchGraphQL(query);
+
+  if (res.errors) {
+    throw new Error(res.errors[0].message);
   }
+
+  console.log("========== GRAPHQL RESPONSE ==========");
+  console.log(JSON.stringify(res.data.user.contributionsCollection, null, 2));
+  console.log("======================================");
+
+  return res.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions || 0;
+
+} catch (e) {
+  console.error('Failed to fetch contributions:', e.message);
+  return 0;
 }
 
 module.exports = { getAllRepos, getUser, getPRs, getIssues, getLanguages, getContributions };

@@ -23,7 +23,7 @@ jobs:
           
       - name: Generate Dashboard SVG
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN }}
         run: node scripts/generate-dashboard.js
           
       - name: Check for changes
