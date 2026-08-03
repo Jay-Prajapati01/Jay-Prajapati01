@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 732 610" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 732 413" width="100%" height="100%" preserveAspectRatio="xMinYMin slice">
   <defs>
     <style>
       @font-face { font-family: 'JetBrains Mono'; src: local('JetBrains Mono'), local('IBM Plex Mono'), local('Fira Code'), local('SF Mono'), local('Menlo'); }
@@ -7,10 +7,10 @@
   </defs>
 
   <!-- Background -->
-  <rect width="732" height="610" fill="#09090B"/>
+  <rect width="732" height="413" fill="#09090B"/>
 
   <!-- Border -->
-  <rect x="0" y="0" width="732" height="610" rx="10" fill="none" stroke="#22D3EE" stroke-width="1.5"/>
+  <rect x="0" y="0" width="732" height="413" rx="10" fill="none" stroke="#22D3EE" stroke-width="1.5"/>
 
   <!-- Terminal Header -->
   <rect width="732" height="36" fill="#0F172A"/>
@@ -29,77 +29,56 @@
   <line x1="0" y1="36" x2="732" y2="36" stroke="#334155" stroke-width="0.5"/>
 
   <!-- PERSONAL.INFO Section -->
-  <text x="32" y="72" font-size="13" fill="#22D3EE" font-weight="700" letter-spacing="1.5">PERSONAL.INFO</text>
+  <text x="32" y="68" font-size="14" fill="#22D3EE" font-weight="700" letter-spacing="1.5">PERSONAL.INFO</text>
 
   <!-- Name -->
-  <text x="32" y="102" font-size="11" fill="#94A3B8">Name</text>
-  <text x="160" y="102" font-size="12" fill="#F8FAFC">Jay Prajapati</text>
+  <text x="32" y="98" font-size="12" fill="#94A3B8">Name</text>
+  <text x="160" y="98" font-size="13" fill="#F8FAFC">Jay Prajapati</text>
 
   <!-- Role -->
-  <text x="32" y="128" font-size="11" fill="#94A3B8">Role</text>
-  <text x="160" y="128" font-size="12" fill="#F8FAFC">AI Engineer | Full-Stack Developer</text>
+  <text x="32" y="124" font-size="12" fill="#94A3B8">Role</text>
+  <text x="160" y="124" font-size="13" fill="#F8FAFC">AI Engineer | Full-Stack Developer</text>
 
   <!-- Location -->
-  <text x="32" y="154" font-size="11" fill="#94A3B8">Location</text>
-  <text x="160" y="154" font-size="12" fill="#F8FAFC">Ahmedabad, India</text>
+  <text x="32" y="150" font-size="12" fill="#94A3B8">Location</text>
+  <text x="160" y="150" font-size="13" fill="#F8FAFC">Ahmedabad, India</text>
 
   <!-- Status -->
-  <text x="32" y="180" font-size="11" fill="#94A3B8">Status</text>
-  <text x="160" y="180" font-size="12" fill="#10B981">Building AI Products</text>
+  <text x="32" y="176" font-size="12" fill="#94A3B8">Status</text>
+  <text x="160" y="176" font-size="13" fill="#10B981">Building AI Products</text>
 
   <!-- Focus -->
-  <text x="32" y="206" font-size="11" fill="#94A3B8">Focus</text>
-  <text x="160" y="206" font-size="12" fill="#F8FAFC">Intelligent Systems &amp; Automation</text>
+  <text x="32" y="202" font-size="12" fill="#94A3B8">Focus</text>
+  <text x="160" y="202" font-size="13" fill="#F8FAFC">Intelligent Systems &amp; Automation</text>
 
   <!-- Separator -->
-  <line x1="32" y1="228" x2="700" y2="228" stroke="#334155" stroke-width="0.5"/>
+  <line x1="32" y1="222" x2="700" y2="222" stroke="#334155" stroke-width="0.5"/>
 
   <!-- ENGINEERING Section -->
-  <text x="32" y="260" font-size="13" fill="#22D3EE" font-weight="700" letter-spacing="1.5">ENGINEERING</text>
+  <text x="32" y="252" font-size="14" fill="#22D3EE" font-weight="700" letter-spacing="1.5">ENGINEERING</text>
 
   <!-- Languages -->
-  <text x="32" y="290" font-size="11" fill="#94A3B8">Languages</text>
-  <text x="160" y="290" font-size="12" fill="#F8FAFC">C++ | Python | TypeScript</text>
+  <text x="32" y="282" font-size="12" fill="#94A3B8">Languages</text>
+  <text x="160" y="282" font-size="13" fill="#F8FAFC">C++ | Python | TypeScript</text>
 
   <!-- Frameworks -->
-  <text x="32" y="316" font-size="11" fill="#94A3B8">Frameworks</text>
-  <text x="160" y="316" font-size="12" fill="#F8FAFC">Next.js | React | Tailwind CSS</text>
+  <text x="32" y="308" font-size="12" fill="#94A3B8">Frameworks</text>
+  <text x="160" y="308" font-size="13" fill="#F8FAFC">Next.js | React | Tailwind CSS</text>
 
   <!-- Backend -->
-  <text x="32" y="342" font-size="11" fill="#94A3B8">Backend</text>
-  <text x="160" y="342" font-size="12" fill="#F8FAFC">FastAPI | Node.js | Express.js</text>
+  <text x="32" y="334" font-size="12" fill="#94A3B8">Backend</text>
+  <text x="160" y="334" font-size="13" fill="#F8FAFC">FastAPI | Node.js | Express.js</text>
 
   <!-- Database -->
-  <text x="32" y="368" font-size="11" fill="#94A3B8">Database</text>
-  <text x="160" y="368" font-size="12" fill="#F8FAFC">PostgreSQL | MongoDB | Redis | Qdrant</text>
+  <text x="32" y="360" font-size="12" fill="#94A3B8">Database</text>
+  <text x="160" y="360" font-size="13" fill="#F8FAFC">PostgreSQL | MongoDB | Redis | Qdrant</text>
 
   <!-- AI Stack -->
-  <text x="32" y="394" font-size="11" fill="#94A3B8">AI Stack</text>
-  <text x="160" y="394" font-size="12" fill="#F8FAFC">Ollama | RAG | LangChain | OpenCV</text>
+  <text x="32" y="386" font-size="12" fill="#94A3B8">AI Stack</text>
+  <text x="160" y="386" font-size="13" fill="#F8FAFC">Ollama | RAG | LangChain | OpenCV</text>
 
   <!-- Cloud -->
-  <text x="32" y="420" font-size="11" fill="#94A3B8">Cloud</text>
-  <text x="160" y="420" font-size="12" fill="#F8FAFC">Docker | AWS | Cloudflare | Vercel</text>
-
-  <!-- Separator -->
-  <line x1="32" y1="445" x2="700" y2="445" stroke="#334155" stroke-width="0.5"/>
-
-  <!-- CONTACT Section -->
-  <text x="32" y="475" font-size="13" fill="#22D3EE" font-weight="700" letter-spacing="1.5">CONTACT</text>
-
-  <!-- Email -->
-  <text x="32" y="505" font-size="11" fill="#94A3B8">Email</text>
-  <text x="160" y="505" font-size="12" fill="#F8FAFC">jay.190819@gmail.com</text>
-
-  <!-- LinkedIn -->
-  <text x="32" y="531" font-size="11" fill="#94A3B8">LinkedIn</text>
-  <text x="160" y="531" font-size="12" fill="#F8FAFC">linkedin.com/in/jay-prajapati</text>
-
-  <!-- GitHub -->
-  <text x="32" y="557" font-size="11" fill="#94A3B8">GitHub</text>
-  <text x="160" y="557" font-size="12" fill="#F8FAFC">github.com/Jay-Prajapati01</text>
-
-  <!-- Bottom CTA -->
-  <text x="366" y="592" text-anchor="middle" font-size="11" fill="#64748B">↓ Explore my projects below</text>
+  <text x="32" y="412" font-size="12" fill="#94A3B8">Cloud</text>
+  <text x="160" y="412" font-size="13" fill="#F8FAFC">Docker | AWS | Cloudflare | Vercel</text>
 
 </svg>
