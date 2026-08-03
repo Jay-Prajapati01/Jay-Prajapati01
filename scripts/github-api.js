@@ -129,50 +129,64 @@ async function getContributions() {
   const query = `
 query {
   user(login: "${USERNAME}") {
-
     contributionsCollection {
-
       contributionCalendar {
         totalContributions
       }
-
       restrictedContributionsCount
-
       totalCommitContributions
-
       totalIssueContributions
-
       totalPullRequestContributions
-
       totalPullRequestReviewContributions
-
       commitContributionsByRepository(maxRepositories: 100) {
-        repository {
-          name
-        }
-        contributions {
-          totalCount
-        }
+        repository { name }
+        contributions { totalCount }
       }
-
     }
-
   }
 }
 `;
-try {
-  const res = await fetchGraphQL(query);
-
-  if (res.errors) {
-    throw new Error(res.errors[0].message);
+  try {
+    const res = await fetchGraphQL(query);
+    if (res.errors) throw new Error(res.errors[0].message);
+    return res.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions || 0;
+  } catch (e) {
+    console.error('Failed to fetch contributions:', e.message);
+    return 0;
   }
-
-  return res.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions || 0;
-
-} catch (e) {
-  console.error('Failed to fetch contributions:', e.message);
-  return 0;
 }
+
+/**
+ * Fetches the full contribution calendar (all weeks, days, dates, counts).
+ * Returns the raw contributionCalendar object from GraphQL.
+ */
+async function getContributionCalendar() {
+  const query = `
+query {
+  user(login: "${USERNAME}") {
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+        weeks {
+          contributionDays {
+            date
+            weekday
+            contributionCount
+          }
+        }
+      }
+    }
+  }
+}
+`;
+  try {
+    const res = await fetchGraphQL(query);
+    if (res.errors) throw new Error(res.errors[0].message);
+    return res.data?.user?.contributionsCollection?.contributionCalendar || null;
+  } catch (e) {
+    console.error('Failed to fetch contribution calendar:', e.message);
+    return null;
+  }
 }
 
 module.exports = {
@@ -181,5 +195,6 @@ module.exports = {
   getPRs,
   getIssues,
   getLanguages,
-  getContributions
+  getContributions,
+  getContributionCalendar
 };
