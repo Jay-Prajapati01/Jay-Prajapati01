@@ -1,5 +1,5 @@
 <div align="center">
-  <video src="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/main/particlesvideo.mp4" width="100%" controls loop autoplay muted></video>
+  <img src="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/main/particle_reconstruction.gif" width="100%" alt="Particle Animation" />
 </div>
 
 <div align="center">
