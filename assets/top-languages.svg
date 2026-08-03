@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 485" width="580" height="485">
+  <defs>
+    <style>
+      @font-face { font-family: 'JetBrains Mono'; src: local('JetBrains Mono'), local('IBM Plex Mono'), local('Fira Code'), local('SF Mono'), local('Menlo'); }
+      text { font-family: 'JetBrains Mono', 'IBM Plex Mono', 'Fira Code', 'SF Mono', 'Menlo', monospace; }
+    </style>
+  </defs>
+  <rect width="580" height="485" rx="16" fill="#09090B"/>
+  <rect width="580" height="485" rx="16" fill="none" stroke="#22D3EE" stroke-width="1.5"/>
+  <text x="32" y="48" font-size="13" fill="#22D3EE" font-weight="700" letter-spacing="1.5">TOP.LANGUAGES</text>
+  <line x1="32" y1="58" x2="548" y2="58" stroke="#334155" stroke-width="0.5"/>
+  <text x="32" y="85" font-size="12" fill="#F8FAFC">TypeScript</text>
+  <text x="548" y="85" font-size="11" fill="#94A3B8" text-anchor="end">79.3%</text>
+  <rect x="32" y="95" width="516" height="24" rx="4" fill="#334155"/>
+  <rect x="32" y="95" width="301.34" height="24" rx="4" fill="#3178c6"/>
+  <text x="32" y="145" font-size="12" fill="#F8FAFC">JavaScript</text>
+  <text x="548" y="145" font-size="11" fill="#94A3B8" text-anchor="end">7.7%</text>
+  <rect x="32" y="155" width="516" height="24" rx="4" fill="#334155"/>
+  <rect x="32" y="155" width="29.259999999999998" height="24" rx="4" fill="#f1e05a"/>
+  <text x="32" y="205" font-size="12" fill="#F8FAFC">Python</text>
+  <text x="548" y="205" font-size="11" fill="#94A3B8" text-anchor="end">6.2%</text>
+  <rect x="32" y="215" width="516" height="24" rx="4" fill="#334155"/>
+  <rect x="32" y="215" width="23.56" height="24" rx="4" fill="#3572A5"/>
+  <text x="32" y="265" font-size="12" fill="#F8FAFC">Jupyter Notebook</text>
+  <text x="548" y="265" font-size="11" fill="#94A3B8" text-anchor="end">6.2%</text>
+  <rect x="32" y="275" width="516" height="24" rx="4" fill="#334155"/>
+  <rect x="32" y="275" width="23.56" height="24" rx="4" fill="#94A3B8"/>
+  <text x="32" y="325" font-size="12" fill="#F8FAFC">PLpgSQL</text>
+  <text x="548" y="325" font-size="11" fill="#94A3B8" text-anchor="end">0.5%</text>
+  <rect x="32" y="335" width="516" height="24" rx="4" fill="#334155"/>
+  <rect x="32" y="335" width="1.9000000000000001" height="24" rx="4" fill="#94A3B8"/>
+  <text x="32" y="385" font-size="12" fill="#F8FAFC">CoffeeScript</text>
+  <text x="548" y="385" font-size="11" fill="#94A3B8" text-anchor="end">0.1%</text>
+  <rect x="32" y="395" width="516" height="24" rx="4" fill="#334155"/>
+  <rect x="32" y="395" width="0.38" height="24" rx="4" fill="#94A3B8"/>
+</svg>
