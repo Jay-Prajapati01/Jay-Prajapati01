@@ -1,8 +1,6 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/main/dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/main/light.svg">
-  <img alt="Jay Prajapati" src="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/main/light.svg">
-</picture>
+<div align="center">
+  <video src="https://raw.githubusercontent.com/Jay-Prajapati01/Jay-Prajapati01/main/particlesvideo.mp4" width="100%" controls loop autoplay muted></video>
+</div>
 
 <div align="center">
 
