@@ -1,7 +1,11 @@
 const https = require('https');
+const fs = require('fs');
+const path = require('path');
 
-const GITHUB_TOKEN = process.env.GH_STATS_TOKEN || process.env.GITHUB_TOKEN;
+const GITHUB_TOKEN = process.env.GH_STATS_TOKEN;
 const USERNAME = 'Jay-Prajapati01';
+
+const CACHE_FILE = path.join(__dirname, '..', '.api-cache.json');
 
 const options = {
   hostname: 'api.github.com',
@@ -11,6 +15,37 @@ const options = {
     ...(GITHUB_TOKEN && { 'Authorization': `token ${GITHUB_TOKEN}` })
   }
 };
+
+function readCache() {
+  try {
+    if (fs.existsSync(CACHE_FILE)) {
+      return JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8'));
+    }
+  } catch (e) {
+    console.error('Failed to read API cache:', e.message);
+  }
+  return {};
+}
+
+function writeCache(cache) {
+  try {
+    fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2), 'utf8');
+  } catch (e) {
+    console.error('Failed to write API cache:', e.message);
+  }
+}
+
+async function getCachedOrFetch(key, fetchFn) {
+  const cache = readCache();
+  if (cache[key] !== undefined) {
+    console.log(`[cache] Using cached data for key: ${key}`);
+    return cache[key];
+  }
+  const data = await fetchFn();
+  cache[key] = data;
+  writeCache(cache);
+  return data;
+}
 
 function fetchJSON(path) {
   return new Promise((resolve, reject) => {
@@ -45,50 +80,58 @@ async function fetchWithRetry(path, retries = 3) {
 }
 
 async function getAllRepos() {
-  const repos = [];
-  let page = 1;
-  while (true) {
-    const data = await fetchWithRetry(`/users/${USERNAME}/repos?per_page=100&page=${page}&type=all`);
-    if (!data.length) break;
-    repos.push(...data);
-    if (data.length < 100) break;
-    page++;
-  }
-  return repos;
+  return getCachedOrFetch('repos', async () => {
+    const repos = [];
+    let page = 1;
+    while (true) {
+      const data = await fetchWithRetry(`/users/${USERNAME}/repos?per_page=100&page=${page}&type=all`);
+      if (!data.length) break;
+      repos.push(...data);
+      if (data.length < 100) break;
+      page++;
+    }
+    return repos;
+  });
 }
 
 async function getUser() {
-  return fetchWithRetry(`/users/${USERNAME}`);
+  return getCachedOrFetch('user', () => fetchWithRetry(`/users/${USERNAME}`));
 }
 
 async function getPRs() {
-  const data = await fetchWithRetry(`/search/issues?q=author:${USERNAME}+type:pr&per_page=1`);
-  return data.total_count || 0;
+  return getCachedOrFetch('prs', async () => {
+    const data = await fetchWithRetry(`/search/issues?q=author:${USERNAME}+type:pr&per_page=1`);
+    return data.total_count || 0;
+  });
 }
 
 async function getIssues() {
-  const data = await fetchWithRetry(`/search/issues?q=author:${USERNAME}+type:issue&per_page=1`);
-  return data.total_count || 0;
+  return getCachedOrFetch('issues', async () => {
+    const data = await fetchWithRetry(`/search/issues?q=author:${USERNAME}+type:issue&per_page=1`);
+    return data.total_count || 0;
+  });
 }
 
 async function getLanguages(repos) {
-  const langMap = {};
-  for (const repo of repos) {
-    if (repo.archived || repo.fork || !repo.language) continue;
-    try {
-      const langs = await fetchWithRetry(`/repos/${USERNAME}/${repo.name}/languages`);
-      if (langs.message && langs.message.includes('Not Found')) continue;
-      for (const [lang, bytes] of Object.entries(langs)) {
-        if (['HTML', 'CSS'].includes(lang)) continue;
-        if (typeof bytes === 'number') {
-          langMap[lang] = (langMap[lang] || 0) + bytes;
+  return getCachedOrFetch('languages', async () => {
+    const langMap = {};
+    for (const repo of repos) {
+      if (repo.archived || repo.fork || !repo.language) continue;
+      try {
+        const langs = await fetchWithRetry(`/repos/${USERNAME}/${repo.name}/languages`);
+        if (langs.message && langs.message.includes('Not Found')) continue;
+        for (const [lang, bytes] of Object.entries(langs)) {
+          if (['HTML', 'CSS'].includes(lang)) continue;
+          if (typeof bytes === 'number') {
+            langMap[lang] = (langMap[lang] || 0) + bytes;
+          }
         }
+      } catch (e) {
+        console.error(`Failed to fetch languages for ${repo.name}:`, e.message);
       }
-    } catch (e) {
-      console.error(`Failed to fetch languages for ${repo.name}:`, e.message);
     }
-  }
-  return langMap;
+    return langMap;
+  });
 }
 
 function fetchGraphQL(query) {
@@ -125,43 +168,9 @@ function fetchGraphQL(query) {
   });
 }
 
-async function getContributions() {
-  const query = `
-query {
-  user(login: "${USERNAME}") {
-    contributionsCollection {
-      contributionCalendar {
-        totalContributions
-      }
-      restrictedContributionsCount
-      totalCommitContributions
-      totalIssueContributions
-      totalPullRequestContributions
-      totalPullRequestReviewContributions
-      commitContributionsByRepository(maxRepositories: 100) {
-        repository { name }
-        contributions { totalCount }
-      }
-    }
-  }
-}
-`;
-  try {
-    const res = await fetchGraphQL(query);
-    if (res.errors) throw new Error(res.errors[0].message);
-    return res.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions || 0;
-  } catch (e) {
-    console.error('Failed to fetch contributions:', e.message);
-    return 0;
-  }
-}
-
-/**
- * Fetches the full contribution calendar (all weeks, days, dates, counts).
- * Returns the raw contributionCalendar object from GraphQL.
- */
-async function getContributionCalendar() {
-  const query = `
+async function getRawContributionData() {
+  return getCachedOrFetch('rawContributions', async () => {
+    const query = `
 query {
   user(login: "${USERNAME}") {
     contributionsCollection {
@@ -175,18 +184,24 @@ query {
           }
         }
       }
+      restrictedContributionsCount
+      totalCommitContributions
+      totalIssueContributions
+      totalPullRequestContributions
+      totalPullRequestReviewContributions
     }
   }
 }
 `;
-  try {
-    const res = await fetchGraphQL(query);
-    if (res.errors) throw new Error(res.errors[0].message);
-    return res.data?.user?.contributionsCollection?.contributionCalendar || null;
-  } catch (e) {
-    console.error('Failed to fetch contribution calendar:', e.message);
-    return null;
-  }
+    try {
+      const res = await fetchGraphQL(query);
+      if (res.errors) throw new Error(res.errors[0].message);
+      return res.data?.user?.contributionsCollection || null;
+    } catch (e) {
+      console.error('Failed to fetch raw contribution data:', e.message);
+      return null;
+    }
+  });
 }
 
 module.exports = {
@@ -195,6 +210,5 @@ module.exports = {
   getPRs,
   getIssues,
   getLanguages,
-  getContributions,
-  getContributionCalendar
+  getRawContributionData
 };

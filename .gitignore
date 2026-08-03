@@ -27,3 +27,5 @@ node_modules/
 # Temporary
 *.tmp
 *.bak
+.api-cache.json
+

@@ -3,7 +3,8 @@
 const fs   = require('fs');
 const path = require('path');
 
-const { getAllRepos, getUser, getPRs, getIssues, getContributions } = require('./github-api');
+const { getAllRepos, getUser, getPRs, getIssues, getRawContributionData } = require('./github-api');
+const { processContributionData } = require('./contribution-service');
 const { processUserData } = require('./data-processor');
 const {
   openCard, closeCard, createHeader,
@@ -12,26 +13,28 @@ const {
   COLORS, escapeXml
 } = require('./svg-utils');
 
-// ─── Layout constants ────────────────────────────────────────────────────────
 const WIDTH   = 495;
 const PAD     = 32;
 const VALUE_X = WIDTH - PAD;
 
 async function generate() {
-  console.log('[engineering-stats] Fetching data…');
+  console.log('[engineering-stats] Loading data…');
 
-  const [user, repos, prs, issues, contributions] = await Promise.all([
+  const [user, repos, prs, issues, rawContributions] = await Promise.all([
     getUser(),
     getAllRepos(),
     getPRs(),
     getIssues(),
-    getContributions()
+    getRawContributionData()
   ]);
 
-  const stats = processUserData(user, repos, prs, issues, contributions);
-  console.log('[engineering-stats] Stats:', stats);
+  // Process contributions and streaks
+  const contributionStats = processContributionData(rawContributions);
 
-  // ─── Metric rows ───────────────────────────────────────────────────────────
+  // Process user and repo info using the contributionStats
+  const stats = processUserData(user, repos, prs, issues, contributionStats);
+  console.log('[engineering-stats] Processed stats:', stats);
+
   const metrics = [
     { label: 'Total Contributions', value: stats.totalContributions },
     { label: 'Public Repositories', value: stats.publicRepos        },
@@ -43,26 +46,17 @@ async function generate() {
     { label: 'Following',           value: stats.following          }
   ];
 
-  // Tallest metric is contributions — build a max-relative bar for each
   const maxVal = Math.max(1, ...metrics.map(m => Number(m.value) || 0));
 
-  // ─── SVG layout ────────────────────────────────────────────────────────────
-  // Fixed height to match top-languages card
   const metricH = 43;
   const HEIGHT  = 528;
 
   let svg = openCard(WIDTH, HEIGHT);
 
-  // Header
   svg += createHeader(WIDTH, 'GITHUB.STATS', stats.lastUpdated);
-
-  // Section label
   svg += createSectionTitle(88, 'Activity Overview');
-
-  // Separator under section title
   svg += createSeparator(96, WIDTH);
 
-  // Metrics
   let y = 122;
   for (const { label, value } of metrics) {
     const num     = Number(value) || 0;
@@ -74,13 +68,10 @@ async function generate() {
     y += metricH;
   }
 
-  // Footer
   svg += createSeparator(HEIGHT - 36, WIDTH, 0);
   svg += createFooter(WIDTH, HEIGHT, stats.lastUpdated);
-
   svg += closeCard();
 
-  // ─── Write file ─────────────────────────────────────────────────────────────
   const outPath = path.join(__dirname, '..', 'assets', 'engineering-stats.svg');
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, svg, 'utf8');
