@@ -14,7 +14,7 @@
 
 <!-- STREAK STATS -->
 <div align="center" style="margin-top:24px;">
-  <img width="100%" src="https://streak-stats.demolab.com/?user=Jay-Prajapati01&hide_border=true&background=09090B&stroke=22D3EE&ring=A78BFA&fire=10B981&currStreakLabel=22D3EE&sideLabels=94A3B8&currStreakNum=F8FAFC&sideNums=F8FAFC&dates=64748B&titleColor=22D3EE&card_width=1180" alt="Streak Stats" />
+  <img width="100%" src="https://streak-stats.demolab.com/?user=Jay-Prajapati01&hide_border=true&background=09090B&stroke=22D3EE&ring=10B981&fire=F97316&currStreakLabel=22D3EE&sideLabels=94A3B8&currStreakNum=F8FAFC&sideNums=F8FAFC&dates=64748B&titleColor=22D3EE&card_width=1180" alt="Streak Stats" />
 </div>
 
 <!-- UNIFIED DASHBOARD -->
@@ -40,6 +40,10 @@
 <div align="center" style="margin-top:24px;margin-bottom:24px;">
   <a href="https://linkedin.com/in/jay-prajapati-826902298">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://www.instagram.com/techydosehub">
+    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" />
   </a>
   &nbsp;&nbsp;
   <a href="mailto:jay.190819@gmail.com">
