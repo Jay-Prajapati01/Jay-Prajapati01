@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 280" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <style>
+      @font-face { font-family: 'JetBrains Mono'; src: local('JetBrains Mono'), local('IBM Plex Mono'), local('Fira Code'), local('SF Mono'), local('Menlo'); }
+      text { font-family: 'JetBrains Mono', 'IBM Plex Mono', 'Fira Code', 'SF Mono', 'Menlo', monospace; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="980" height="280" rx="16" fill="#09090B"/>
+  <rect width="980" height="280" rx="16" fill="none" stroke="#22D3EE" stroke-width="1.5"/>
+
+  <!-- Terminal Header -->
+  <circle cx="24" cy="20" r="5" fill="#ff5f56"/>
+  <circle cx="44" cy="20" r="5" fill="#ffbd2e"/>
+  <circle cx="64" cy="20" r="5" fill="#27c93f"/>
+
+  <text x="490" y="24" text-anchor="middle" font-size="12" fill="#94A3B8" letter-spacing="0.5">./connect.sh</text>
+
+  <circle cx="936" cy="20" r="4" fill="#10B981"/>
+  <text x="948" y="24" font-size="11" fill="#10B981" letter-spacing="1">LIVE</text>
+
+  <!-- Header Separator -->
+  <line x1="0" y1="40" x2="980" y2="40" stroke="#334155" stroke-width="0.5"/>
+
+  <!-- Section Title -->
+  <text x="32" y="72" font-size="14" fill="#22D3EE" font-weight="700" letter-spacing="1.5">CONTACT</text>
+
+  <!-- Title Underline -->
+  <line x1="32" y1="82" x2="100" y2="82" stroke="#22D3EE" stroke-width="1"/>
+
+  <!-- Contact Info -->
+  <text x="32" y="112" font-size="11" fill="#94A3B8">Email</text>
+  <text x="140" y="112" font-size="12" fill="#F8FAFC">jay.190819@gmail.com</text>
+
+  <text x="32" y="142" font-size="11" fill="#94A3B8">LinkedIn</text>
+  <text x="140" y="142" font-size="12" fill="#F8FAFC">linkedin.com/in/jay-prajapati-826902298</text>
+
+  <text x="32" y="172" font-size="11" fill="#94A3B8">GitHub</text>
+  <text x="140" y="172" font-size="12" fill="#F8FAFC">github.com/Jay-Prajapati01</text>
+
+  <!-- Separator -->
+  <line x1="32" y1="195" x2="948" y2="195" stroke="#334155" stroke-width="0.5"/>
+
+  <!-- Action Buttons -->
+  <g transform="translate(490, 235)">
+    <!-- LinkedIn Button -->
+    <g transform="translate(-270, -20)">
+      <rect x="0" y="0" width="150" height="40" rx="8" fill="#09090B" stroke="#22D3EE" stroke-width="1"/>
+      <text x="75" y="25" text-anchor="middle" font-size="12" fill="#F8FAFC" font-weight="500">LinkedIn</text>
+    </g>
+
+    <!-- GitHub Button -->
+    <g transform="translate(-75, -20)">
+      <rect x="0" y="0" width="150" height="40" rx="8" fill="#09090B" stroke="#22D3EE" stroke-width="1"/>
+      <text x="75" y="25" text-anchor="middle" font-size="12" fill="#F8FAFC" font-weight="500">GitHub</text>
+    </g>
+
+    <!-- Email Button -->
+    <g transform="translate(120, -20)">
+      <rect x="0" y="0" width="150" height="40" rx="8" fill="#09090B" stroke="#22D3EE" stroke-width="1"/>
+      <text x="75" y="25" text-anchor="middle" font-size="12" fill="#F8FAFC" font-weight="500">Email</text>
+    </g>
+  </g>
+
+</svg>

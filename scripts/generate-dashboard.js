@@ -1,41 +1,28 @@
 const fs = require('fs');
 const path = require('path');
-const { getAllRepos, getUser, getEvents, getLanguages } = require('./github-api');
+const { getAllRepos, getUser, getPRs, getIssues, getLanguages } = require('./github-api');
 const { processUserData, processLanguages } = require('./data-processor');
 const { escapeXml, COLORS, getLangColor } = require('./svg-utils');
-
-function createStreakCircle(cx, cy, radius, value, color) {
-  const circumference = 2 * Math.PI * radius;
-  const progress = Math.min(value / 30, 1);
-  const dashoffset = circumference * (1 - progress);
-  
-  return `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="${COLORS.separator}" stroke-width="6"/>
-  <circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="${color}" stroke-width="6" 
-    stroke-dasharray="${circumference}" stroke-dashoffset="${dashoffset}" 
-    stroke-linecap="round" transform="rotate(-90 ${cx} ${cy})"/>
-  <text x="${cx}" y="${cy - 8}" text-anchor="middle" font-size="28" fill="${COLORS.value}" font-weight="700">${value}</text>
-  <text x="${cx}" y="${cy + 12}" text-anchor="middle" font-size="10" fill="${COLORS.label}">Current Streak</text>
-  <text x="${cx}" y="${cy + 26}" text-anchor="middle" font-size="9" fill="${COLORS.accent}">days</text>`;
-}
 
 async function generate() {
   try {
     console.log('Fetching GitHub data...');
-    const [user, repos, events] = await Promise.all([
+    const [user, repos, prs, issues] = await Promise.all([
       getUser(),
       getAllRepos(),
-      getEvents()
+      getPRs(),
+      getIssues()
     ]);
     
-    const stats = processUserData(user, repos, events);
-    console.log('Stats processed:', stats);
+    const stats = processUserData(user, repos, prs, issues);
+    console.log('Stats:', stats);
     
     const langMap = await getLanguages(repos);
     const languages = processLanguages(langMap);
-    console.log('Languages processed:', languages);
+    console.log('Languages:', languages);
     
     const width = 980;
-    const height = 520;
+    const height = 340;
     
     let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
   <defs>
@@ -47,59 +34,37 @@ async function generate() {
   <rect width="${width}" height="${height}" rx="16" fill="${COLORS.bg}"/>
   <rect width="${width}" height="${height}" rx="16" fill="none" stroke="${COLORS.border}" stroke-width="1.5"/>`;
     
-    // Top section: Contributions | Streak Circle | Longest Streak
-    const topY = 60;
+    // Left side: GITHUB.STATS
+    const leftX = 32;
+    const rightX = width / 2 + 20;
     
-    // Left: Total Contributions
     svg += `
-  <text x="160" y="${topY}" text-anchor="middle" font-size="42" fill="${COLORS.value}" font-weight="700">${stats.contributions}</text>
-  <text x="160" y="${topY + 28}" text-anchor="middle" font-size="12" fill="${COLORS.label}">Total Contributions</text>
-  <text x="160" y="${topY + 46}" text-anchor="middle" font-size="10" fill="${COLORS.separator}">${stats.firstContribution} - Present</text>`;
-    
-    // Center: Current Streak Circle
-    svg += '\n  ' + createStreakCircle(width / 2, topY + 10, 52, stats.currentStreak, COLORS.accent);
-    
-    // Right: Longest Streak
-    svg += `
-  <text x="${width - 160}" y="${topY}" text-anchor="middle" font-size="42" fill="${COLORS.value}" font-weight="700">${stats.longestStreak}</text>
-  <text x="${width - 160}" y="${topY + 28}" text-anchor="middle" font-size="12" fill="${COLORS.label}">Longest Streak</text>
-  <text x="${width - 160}" y="${topY + 46}" text-anchor="middle" font-size="10" fill="${COLORS.separator}">days</text>`;
-    
-    // Separator line
-    svg += `
-  <line x1="32" y1="145" x2="${width - 32}" y2="145" stroke="${COLORS.separator}" stroke-width="0.5"/>`;
-    
-    // Bottom section: Left (Stats) | Right (Languages)
-    const bottomY = 175;
-    
-    // Left side: GitHub Stats
-    svg += `
-  <text x="32" y="${bottomY}" font-size="14" fill="${COLORS.header}" font-weight="700" letter-spacing="1">GITHUB.STATS</text>`;
+  <text x="${leftX}" y="48" font-size="14" fill="${COLORS.header}" font-weight="700" letter-spacing="1">GITHUB.STATS</text>`;
     
     const statsItems = [
       ['Total Stars Earned', stats.totalStars],
-      ['Total Commits', stats.contributions],
-      ['Total PRs', 'N/A'],
-      ['Total Issues', 'N/A'],
+      ['Total Commits', stats.publicRepos],
+      ['Total PRs', stats.totalPRs],
+      ['Total Issues', stats.totalIssues],
       ['Contributed to (last year)', stats.publicRepos]
     ];
     
-    let statsY = bottomY + 30;
+    let statsY = 80;
     for (const [label, value] of statsItems) {
       svg += `
-  <text x="32" y="${statsY}" font-size="12" fill="${COLORS.label}">• ${escapeXml(label)}</text>
-  <text x="280" y="${statsY}" font-size="12" fill="${COLORS.value}">${escapeXml(String(value))}</text>`;
-      statsY += 26;
+  <text x="${leftX}" y="${statsY}" font-size="12" fill="${COLORS.label}">• ${escapeXml(label)}</text>
+  <text x="${leftX + 260}" y="${statsY}" font-size="12" fill="${COLORS.value}">${escapeXml(String(value))}</text>`;
+      statsY += 30;
     }
     
-    // Right side: Most Used Languages
+    // Right side: MOST.USED.LANGUAGES
     svg += `
-  <text x="520" y="${bottomY}" font-size="14" fill="${COLORS.header}" font-weight="700" letter-spacing="1">MOST.USED.LANGUAGES</text>`;
+  <text x="${rightX}" y="48" font-size="14" fill="${COLORS.header}" font-weight="700" letter-spacing="1">MOST.USED.LANGUAGES</text>`;
     
     // Language bar
-    const barX = 520;
-    const barY = bottomY + 20;
-    const barWidth = width - 552;
+    const barX = rightX;
+    const barY = 68;
+    const barWidth = width - rightX - 32;
     const barHeight = 14;
     
     svg += `
@@ -115,8 +80,8 @@ async function generate() {
     
     // Language legend
     let langY = barY + 40;
-    const col1X = 520;
-    const col2X = 740;
+    const col1X = rightX;
+    const col2X = rightX + 220;
     
     for (let i = 0; i < languages.length; i++) {
       const lang = languages[i];
@@ -130,7 +95,7 @@ async function generate() {
     
     // Footer
     svg += `
-  <text x="${width / 2}" y="${height - 20}" text-anchor="middle" font-size="10" fill="${COLORS.separator}">Last updated: ${stats.lastUpdated} • Auto-generated by GitHub Dashboard</text>`;
+  <text x="${width / 2}" y="${height - 16}" text-anchor="middle" font-size="10" fill="${COLORS.separator}">Last updated: ${stats.lastUpdated} • Auto-generated by GitHub Dashboard</text>`;
     
     svg += '\n</svg>';
     
