@@ -65,9 +65,9 @@ function buildStreakSVG(stats) {
   // ─── Column 1: Total Contributions ─────────────────────────────────────────
   // Grid icon: scale 3.8 → rendered ~42×42
   const gridScale = 3.8;
-  const gridW = 11 * gridScale; // ~41.8
+  const gridW = 11 * gridScale;
   const gridX = c1Mid - gridW / 2;
-  svg += iconContribution(gridX, 62, COLORS.accent, gridScale);
+  svg += iconContribution(gridX, 56, COLORS.accent, gridScale);
   svg += `
   <text x="${c1Mid}" y="142" text-anchor="middle" font-size="44" fill="${COLORS.value}" font-weight="700">${stats.totalContributions}</text>
   <text x="${c1Mid}" y="176" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">TOTAL CONTRIBUTIONS</text>
@@ -81,24 +81,25 @@ function buildStreakSVG(stats) {
     const cy = 118;
     const r  = 50;
     const strokeW = 6;
-    const circumference = Math.round(2 * Math.PI * r); // ~314
+    
+    // Mathematical arc calculation for gap at 12 o'clock (opening from 288 degrees to 252 degrees)
+    // x1 = cx + r*cos(288), y1 = cy + r*sin(288) -> (505.45, 70.45)
+    // x2 = cx + r*cos(252), y2 = cy + r*sin(252) -> (474.55, 70.45)
+    // Circumference of 324 degrees arc length = 2 * PI * 50 * (324/360) = 282.7
+    const arcLength = 283;
 
-    // Animated teal progress ring
+    // Teal progress ring with top gap
     svg += `
-    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2DD4BF" stroke-width="${strokeW}" stroke-dasharray="${circumference}" stroke-dashoffset="${circumference}" stroke-linecap="round" opacity="0.95">
-      <animate attributeName="stroke-dashoffset" from="${circumference}" to="0" dur="1s" fill="freeze"/>
-    </circle>`;
+    <path d="M 505.45 70.45 A 50 50 0 1 1 474.55 70.45" fill="none" stroke="#2DD4BF" stroke-width="${strokeW}" stroke-dasharray="${arcLength}" stroke-dashoffset="${arcLength}" stroke-linecap="round" opacity="0.95">
+      <animate attributeName="stroke-dashoffset" from="${arcLength}" to="0" dur="1s" fill="freeze"/>
+    </path>`;
 
-    // Flame: scale 3.2 → rendered ~11×22
-    // Position so the flame's vertical center sits at the circle's top edge
-    // Native center y ≈ 4.5, so translated center = y_t + 4.5*3.2
-    // Circle top = cy - r = 68. We want flame center at y=68:
-    // y_t + 14.4 = 68 → y_t = 53.6
-    // Native center x ≈ 6.25, translated center = x_t + 6.25*3.2
-    // We want center at cx: x_t + 20 = 490 → x_t = 470
+    // Flame: scale 3.2 (rendered ~22.4px height)
+    // Perfectly centered horizontally on 12 o'clock position (cx = 490)
+    // Vertical center exactly at circle edge (y = 68). Native center y ≈ 4.5 -> y_t = 68 - 4.5 * 3.2 = 53.6
     const flameScale = 3.2;
     const flameX = cx - 6.25 * flameScale;  // 470
-    const flameY = (cy - r) - 4.5 * flameScale + 6;  // 53.6 + slight nudge down
+    const flameY = (cy - r) - 4.5 * flameScale;  // 53.6
     svg += iconFlame(flameX, flameY, '#F97316', flameScale);
 
     // Number centered inside the ring
@@ -110,7 +111,7 @@ function buildStreakSVG(stats) {
     <text x="${c2Mid}" y="${cy + r + 26}" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">CURRENT STREAK</text>
     <text x="${c2Mid}" y="${cy + r + 44}" text-anchor="middle" font-size="10" fill="${COLORS.dim}">${stats.currentStart ? escapeXml(formatDate(stats.currentStart)) + ' — ' + escapeXml(formatDate(stats.currentEnd)) : '—'}</text>`;
   } else {
-    // No streak → same layout as columns 1 & 3 (no ring)
+    // No streak -> same layout as columns 1 & 3 (no ring)
     const flameScale = 3.2;
     const flameX = c2Mid - 6.25 * flameScale;
     svg += iconFlame(flameX, 68, '#F97316', flameScale);
@@ -121,11 +122,11 @@ function buildStreakSVG(stats) {
   }
 
   // ─── Column 3: Longest Streak ──────────────────────────────────────────────
-  // Trophy icon: scale 3.5 → rendered ~35×31
-  const trophyScale = 3.5;
+  // Trophy icon: scale 4.7 (~35% increase from 3.5) -> rendered ~47×42.3
+  const trophyScale = 4.7;
   const trophyNativeW = 10;
   const trophyX = c3Mid - (trophyNativeW * trophyScale) / 2;
-  svg += iconTrophy(trophyX, 65, '#EAB308', trophyScale);
+  svg += iconTrophy(trophyX, 52, '#EAB308', trophyScale);
   svg += `
   <text x="${c3Mid}" y="142" text-anchor="middle" font-size="44" fill="${COLORS.value}" font-weight="700">${stats.longestStreak}</text>
   <text x="${c3Mid}" y="176" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">LONGEST STREAK</text>
