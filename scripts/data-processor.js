@@ -1,4 +1,4 @@
-function processUserData(user, repos, prs, issues) {
+function processUserData(user, repos, prs, issues, contributions = 0) {
   const totalStars = repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
   const totalForks = repos.reduce((sum, r) => sum + (r.forks_count || 0), 0);
   const publicRepos = repos.filter(r => !r.fork && !r.archived).length;
@@ -13,6 +13,7 @@ function processUserData(user, repos, prs, issues) {
     totalForks,
     totalPRs: prs,
     totalIssues: issues,
+    totalContributions: contributions,
     lastUpdated: new Date().toISOString().split('T')[0]
   };
 }

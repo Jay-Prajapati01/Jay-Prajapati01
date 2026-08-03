@@ -11,7 +11,7 @@
 </div>
 
 <div align="center">
-<img src="./assets/contact-terminal.svg" width="100%" alt="Contact Terminal" />
+<img src="./assets/connect-terminal.svg" width="100%" alt="Connect Terminal" />
 </div>
 
 <div align="center">

@@ -1,20 +1,21 @@
 const fs = require('fs');
 const path = require('path');
-const { getAllRepos, getUser, getPRs, getIssues, getLanguages } = require('./github-api');
+const { getAllRepos, getUser, getPRs, getIssues, getLanguages, getContributions } = require('./github-api');
 const { processUserData, processLanguages } = require('./data-processor');
 const { escapeXml, COLORS, getLangColor } = require('./svg-utils');
 
 async function generate() {
   try {
     console.log('Fetching GitHub data...');
-    const [user, repos, prs, issues] = await Promise.all([
+    const [user, repos, prs, issues, contributions] = await Promise.all([
       getUser(),
       getAllRepos(),
       getPRs(),
-      getIssues()
+      getIssues(),
+      getContributions()
     ]);
     
-    const stats = processUserData(user, repos, prs, issues);
+    const stats = processUserData(user, repos, prs, issues, contributions);
     console.log('Stats:', stats);
     
     const langMap = await getLanguages(repos);
@@ -43,10 +44,10 @@ async function generate() {
     
     const statsItems = [
       ['Total Stars Earned', stats.totalStars],
-      ['Total Commits', stats.publicRepos],
+      ['Total Contributions', stats.totalContributions],
+      ['Public Repositories', stats.publicRepos],
       ['Total PRs', stats.totalPRs],
-      ['Total Issues', stats.totalIssues],
-      ['Contributed to (last year)', stats.publicRepos]
+      ['Total Issues', stats.totalIssues]
     ];
     
     let statsY = 95;

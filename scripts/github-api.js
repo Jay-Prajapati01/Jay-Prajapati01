@@ -91,4 +91,62 @@ async function getLanguages(repos) {
   return langMap;
 }
 
-module.exports = { getAllRepos, getUser, getPRs, getIssues, getLanguages };
+function fetchGraphQL(query) {
+  return new Promise((resolve, reject) => {
+    const postData = JSON.stringify({ query });
+    const req = https.request({
+      hostname: 'api.github.com',
+      path: '/graphql',
+      method: 'POST',
+      headers: {
+        'User-Agent': 'GitHub-Dashboard-Generator',
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData),
+        ...(GITHUB_TOKEN && { 'Authorization': `bearer ${GITHUB_TOKEN}` })
+      }
+    }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        if (res.statusCode !== 200) {
+          reject(new Error(`GraphQL API returned status ${res.statusCode}: ${data}`));
+          return;
+        }
+        try {
+          resolve(JSON.parse(data));
+        } catch (e) {
+          reject(new Error(`Failed to parse GraphQL response: ${e.message}`));
+        }
+      });
+    });
+    req.on('error', reject);
+    req.write(postData);
+    req.end();
+  });
+}
+
+async function getContributions() {
+  const query = `
+    query {
+      user(login: "${USERNAME}") {
+        contributionsCollection {
+          contributionCalendar {
+            totalContributions
+          }
+        }
+      }
+    }
+  `;
+  try {
+    const res = await fetchGraphQL(query);
+    if (res.errors) {
+      throw new Error(res.errors[0].message);
+    }
+    return res.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions || 0;
+  } catch (e) {
+    console.error('Failed to fetch contributions:', e.message);
+    return 0;
+  }
+}
+
+module.exports = { getAllRepos, getUser, getPRs, getIssues, getLanguages, getContributions };

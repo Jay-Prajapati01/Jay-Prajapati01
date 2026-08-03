@@ -21,8 +21,8 @@ jobs:
         with:
           github_user_name: Jay-Prajapati01
           outputs: |
-            dist/snake-dark.svg?color_snake=#22D3EE&color_dots=#161B22,#0D9488,#22D3EE,#581C87
-            dist/snake-light.svg?color_snake=#0891B2&color_dots=#E2E8F0,#0D9488,#06B6D4,#4C1D95
+            dist/snake-dark.svg?color_snake=#22D3EE&color_dots=#161B22,#0D9488,#06B6D4,#22D3EE,#581C87
+            dist/snake-light.svg?color_snake=#0891B2&color_dots=#EBEDF0,#0D9488,#06B6D4,#22D3EE,#581C87
           
       - name: Deploy to output branch
         uses: peaceiris/actions-gh-pages@v4

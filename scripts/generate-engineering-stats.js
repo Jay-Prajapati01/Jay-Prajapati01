@@ -13,7 +13,7 @@ async function generate() {
       getContributions()
     ]);
     
-    const stats = processUserData(user, repos, contributions);
+    const stats = processUserData(user, repos, 0, 0, contributions);
     console.log('Stats processed:', stats);
     
     const width = 580;
@@ -30,8 +30,7 @@ async function generate() {
       ['Followers', stats.followers],
       ['Following', stats.following],
       ['Total Forks', stats.totalForks],
-      ['Contributions', stats.contributions],
-      ['Most Active Repo', stats.mostActiveRepo],
+      ['Contributions', stats.totalContributions],
       ['Last Updated', stats.lastUpdated]
     ];
     
