@@ -127,16 +127,39 @@ function fetchGraphQL(query) {
 
 async function getContributions() {
   const query = `
-    query {
-      user(login: "${USERNAME}") {
-        contributionsCollection {
-          contributionCalendar {
-            totalContributions
-          }
+query {
+  user(login: "${USERNAME}") {
+
+    contributionsCollection {
+
+      contributionCalendar {
+        totalContributions
+      }
+
+      restrictedContributionsCount
+
+      totalCommitContributions
+
+      totalIssueContributions
+
+      totalPullRequestContributions
+
+      totalPullRequestReviewContributions
+
+      commitContributionsByRepository(maxRepositories: 100) {
+        repository {
+          name
+        }
+        contributions {
+          totalCount
         }
       }
+
     }
-  `;
+
+  }
+}
+`;
 try {
   const res = await fetchGraphQL(query);
 
