@@ -47,14 +47,14 @@ async function generate() {
   const maxVal = Math.max(1, ...metrics.map(m => Number(m.value) || 0));
 
   // ─── SVG layout ────────────────────────────────────────────────────────────
-  // Header 48px + section title 32px + (metrics * 52px) + footer 36px
+  // Fixed height to match top-languages card
   const metricH = 52;
-  const HEIGHT  = 48 + 28 + metrics.length * metricH + 36;
+  const HEIGHT  = 528;
 
   let svg = openCard(WIDTH, HEIGHT);
 
   // Header
-  svg += createHeader(WIDTH, 'ENGINEERING.STATS', stats.lastUpdated);
+  svg += createHeader(WIDTH, 'GITHUB.STATS', stats.lastUpdated);
 
   // Section label
   svg += createSectionTitle(88, 'Activity Overview');

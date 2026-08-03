@@ -87,10 +87,10 @@ function createHeader(width, title, rightLabel = '') {
   <rect x="0" y="0" width="${width}" height="${headerH}" rx="16" fill="${COLORS.surface}"/>
   <rect x="0" y="${headerH - 16}" width="${width}" height="16" fill="${COLORS.surface}"/>
   <line x1="0" y1="${headerH}" x2="${width}" y2="${headerH}" stroke="${COLORS.separator}" stroke-width="1"/>
-  <text x="32" y="30" font-size="11" fill="${COLORS.accent}" font-weight="700" letter-spacing="2">${escapeXml(title)}</text>`;
+  <text x="32" y="31" font-size="14" fill="${COLORS.accent}" font-weight="700" letter-spacing="2">${escapeXml(title)}</text>`;
   if (rightLabel) {
     out += `
-  <text x="${width - 32}" y="30" font-size="11" fill="${COLORS.label}" text-anchor="end" letter-spacing="0.5">${escapeXml(rightLabel)}</text>`;
+  <text x="${width - 32}" y="31" font-size="12" fill="${COLORS.label}" text-anchor="end" letter-spacing="0.5">${escapeXml(rightLabel)}</text>`;
   }
   return out;
 }
@@ -108,7 +108,7 @@ function createSeparator(y, width, padX = 32) {
  */
 function createSectionTitle(y, title) {
   return `
-  <text x="32" y="${y}" font-size="10" fill="${COLORS.accentMuted}" font-weight="700" letter-spacing="2">${escapeXml(title.toUpperCase())}</text>`;
+  <text x="32" y="${y}" font-size="11" fill="${COLORS.accentMuted}" font-weight="700" letter-spacing="2">${escapeXml(title.toUpperCase())}</text>`;
 }
 
 /**
@@ -116,8 +116,8 @@ function createSectionTitle(y, title) {
  */
 function createMetricRow(y, label, value, valueX = 280) {
   return `
-  <text x="32" y="${y}" font-size="12" fill="${COLORS.label}">${escapeXml(label)}</text>
-  <text x="${valueX}" y="${y}" font-size="13" fill="${COLORS.value}" font-weight="600" text-anchor="end">${escapeXml(String(value))}</text>`;
+  <text x="32" y="${y}" font-size="14" fill="${COLORS.label}">${escapeXml(label)}</text>
+  <text x="${valueX}" y="${y}" font-size="15" fill="${COLORS.value}" font-weight="600" text-anchor="end">${escapeXml(String(value))}</text>`;
 }
 
 /**
@@ -160,9 +160,9 @@ function createSegmentedBar(x, y, totalW, segments, h = 8) {
  */
 function createLangLegendItem(x, y, name, percentage, color) {
   return `
-  <rect x="${x}" y="${y - 6}" width="8" height="8" rx="2" fill="${color}"/>
-  <text x="${x + 14}" y="${y + 1}" font-size="11" fill="${COLORS.value}">${escapeXml(name)}</text>
-  <text x="${x + 14}" y="${y + 14}" font-size="10" fill="${COLORS.label}">${escapeXml(percentage)}%</text>`;
+  <rect x="${x}" y="${y - 6}" width="10" height="10" rx="2" fill="${color}"/>
+  <text x="${x + 18}" y="${y + 2}" font-size="13" fill="${COLORS.value}">${escapeXml(name)}</text>
+  <text x="${x + 18}" y="${y + 18}" font-size="12" fill="${COLORS.label}">${escapeXml(percentage)}%</text>`;
 }
 
 /**
@@ -172,7 +172,7 @@ function createFooter(width, height, dateStr) {
   const footerY = height - 36;
   return `
   <line x1="0" y1="${footerY}" x2="${width}" y2="${footerY}" stroke="${COLORS.separator}" stroke-width="1"/>
-  <text x="${width / 2}" y="${height - 14}" text-anchor="middle" font-size="10" fill="${COLORS.sublabel}" letter-spacing="0.5">Updated ${escapeXml(dateStr)} · jay-prajapati01 · github-actions</text>`;
+  <text x="${width / 2}" y="${height - 14}" text-anchor="middle" font-size="11" fill="${COLORS.sublabel}" letter-spacing="0.5">Updated ${escapeXml(dateStr)} · jay-prajapati01 · github-actions</text>`;
 }
 
 // ─── Legacy shim (keeps generate-engineering-stats.js working) ───────────────

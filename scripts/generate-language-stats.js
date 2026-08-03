@@ -33,12 +33,9 @@ async function generate() {
 
   // ─── Layout maths ──────────────────────────────────────────────────────────
   const legendRows = Math.ceil(languages.length / LEGEND_COL);
-  const HEIGHT     = 48          // header
-                   + 28          // section title gap
-                   + 20          // separator + bar area
-                   + BAR_H + 20  // bar + gap
-                   + legendRows * LEGEND_ROW_H
-                   + 36;         // footer
+  
+  // Fixed height to perfectly match engineering-stats card
+  const HEIGHT = 528;
 
   let svg = openCard(WIDTH, HEIGHT);
 
