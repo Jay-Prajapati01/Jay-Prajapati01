@@ -1,44 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 220" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 280" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
   <defs>
     <style>
       @font-face { font-family: 'JetBrains Mono'; src: local('JetBrains Mono'), local('IBM Plex Mono'), local('Fira Code'), local('SF Mono'), local('Menlo'); }
       text { font-family: 'JetBrains Mono', 'IBM Plex Mono', 'Fira Code', 'SF Mono', 'Menlo', monospace; }
     </style>
+    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="50%" stop-color="#2DD4BF" />
+      <stop offset="100%" stop-color="#34D399" />
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="ringGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
   <!-- Card background -->
-  <rect width="980" height="220" rx="16" fill="#09090B"/>
+  <rect width="980" height="280" rx="16" fill="#09090B"/>
   <!-- Card border -->
-  <rect width="980" height="220" rx="16" fill="none" stroke="#1E293B" stroke-width="1"/>
+  <rect width="980" height="280" rx="16" fill="none" stroke="#1E293B" stroke-width="1"/>
   <rect x="0" y="0" width="980" height="48" rx="16" fill="#0F172A"/>
   <rect x="0" y="32" width="980" height="16" fill="#0F172A"/>
   <line x1="0" y1="48" x2="980" y2="48" stroke="#1E293B" stroke-width="1"/>
-  <text x="32" y="31" font-size="14" fill="#22D3EE" font-weight="700" letter-spacing="2">CONTRIBUTION.STREAK</text>
+  <text x="32" y="31" font-size="14" fill="#2DD4BF" font-weight="700" letter-spacing="2">CONTRIBUTION.STREAK</text>
   <text x="948" y="31" font-size="12" fill="#64748B" text-anchor="end" letter-spacing="0.5">2026-08-03</text>
-  <line x1="340" y1="64" x2="340" y2="170" stroke="#1E293B" stroke-width="1"/>
-  <line x1="640" y1="64" x2="640" y2="170" stroke="#1E293B" stroke-width="1"/><g transform="translate(177.9,60) scale(2.2)">
-    <rect x="1" y="1" width="4" height="4" rx="0.5" fill="#22D3EE" opacity="0.4"/>
-    <rect x="6" y="1" width="4" height="4" rx="0.5" fill="#22D3EE" opacity="0.7"/>
-    <rect x="1" y="6" width="4" height="4" rx="0.5" fill="#22D3EE"/>
-    <rect x="6" y="6" width="4" height="4" rx="0.5" fill="#22D3EE" opacity="0.5"/>
+  <line x1="340" y1="55" x2="340" y2="238" stroke="#1E293B" stroke-width="1"/>
+  <line x1="640" y1="55" x2="640" y2="238" stroke="#1E293B" stroke-width="1"/><g transform="translate(169.1,62) scale(3.8)">
+    <rect x="1" y="1" width="4" height="4" rx="0.5" fill="#2DD4BF" opacity="0.4"/>
+    <rect x="6" y="1" width="4" height="4" rx="0.5" fill="#2DD4BF" opacity="0.7"/>
+    <rect x="1" y="6" width="4" height="4" rx="0.5" fill="#2DD4BF"/>
+    <rect x="6" y="6" width="4" height="4" rx="0.5" fill="#2DD4BF" opacity="0.5"/>
   </g>
-  <text x="190" y="110" text-anchor="middle" font-size="36" fill="#F1F5F9" font-weight="700">112</text>
-  <text x="190" y="148" text-anchor="middle" font-size="12" fill="#64748B" letter-spacing="1">TOTAL CONTRIBUTIONS</text>
-  <text x="190" y="166" text-anchor="middle" font-size="10" fill="#334155">Last: Aug 3, 2026</text>
-    <circle cx="490" cy="92" r="44" fill="none" stroke="#2DD4BF" stroke-width="5" stroke-dasharray="277" stroke-dashoffset="277" stroke-linecap="round">
-      <animate attributeName="stroke-dashoffset" from="277" to="0" dur="1s" fill="freeze" />
-    </circle><g transform="translate(476.36,30.4) scale(2.2)">
+  <text x="190" y="142" text-anchor="middle" font-size="44" fill="#F1F5F9" font-weight="700">112</text>
+  <text x="190" y="176" text-anchor="middle" font-size="12" fill="#64748B" letter-spacing="1">TOTAL CONTRIBUTIONS</text>
+  <text x="190" y="196" text-anchor="middle" font-size="10" fill="#334155">Last: Aug 3, 2026</text>
+    <circle cx="490" cy="118" r="50" fill="none" stroke="#2DD4BF" stroke-width="6" stroke-dasharray="314" stroke-dashoffset="314" stroke-linecap="round" opacity="0.95">
+      <animate attributeName="stroke-dashoffset" from="314" to="0" dur="1s" fill="freeze"/>
+    </circle><g transform="translate(470,59.6) scale(3.2)">
     <path d="M6 1C6 1 4.5 3.5 4.5 5.5C4.5 6.5 5 7.5 6 8C5 7 4.8 5.5 5.5 4.5C5.5 4.5 6 6 7 6.5C7 6.5 8 5.5 8 4C8 2.5 6 1 6 1Z" fill="#F97316">
       <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
     </path>
   </g>
-    <text x="490" y="104" text-anchor="middle" font-size="36" fill="#F1F5F9" font-weight="700">3</text>
-    <text x="490" y="156" text-anchor="middle" font-size="12" fill="#64748B" letter-spacing="1">CURRENT STREAK</text>
-    <text x="490" y="174" text-anchor="middle" font-size="10" fill="#334155">Aug 1, 2026 — Aug 3, 2026</text><g transform="translate(779,60) scale(2.2)">
+    <text x="490" y="126" text-anchor="middle" font-size="44" fill="#F1F5F9" font-weight="700">1</text>
+    <text x="490" y="194" text-anchor="middle" font-size="12" fill="#64748B" letter-spacing="1">CURRENT STREAK</text>
+    <text x="490" y="212" text-anchor="middle" font-size="10" fill="#334155">Aug 3, 2026 — Aug 3, 2026</text><g transform="translate(772.5,65) scale(3.5)">
     <path d="M3 1h6v1h2v2c0 1-1 2-2 2h0c0 1-1 2-2 2v1h2v1H3v-1h2V6c-1 0-2-1-2-2H3c-1 0-2-1-2-2V2h2V1z" fill="#EAB308"/>
   </g>
-  <text x="790" y="110" text-anchor="middle" font-size="36" fill="#F1F5F9" font-weight="700">3</text>
-  <text x="790" y="148" text-anchor="middle" font-size="12" fill="#64748B" letter-spacing="1">LONGEST STREAK</text>
-  <text x="790" y="166" text-anchor="middle" font-size="10" fill="#334155">Aug 1, 2026 — Aug 3, 2026</text>
-  <line x1="0" y1="184" x2="980" y2="184" stroke="#1E293B" stroke-width="1"/>
-  <text x="490" y="206" text-anchor="middle" font-size="11" fill="#475569" letter-spacing="0.5">Updated 2026-08-03 · jay-prajapati01 · github-actions</text>
+  <text x="790" y="142" text-anchor="middle" font-size="44" fill="#F1F5F9" font-weight="700">3</text>
+  <text x="790" y="176" text-anchor="middle" font-size="12" fill="#64748B" letter-spacing="1">LONGEST STREAK</text>
+  <text x="790" y="196" text-anchor="middle" font-size="10" fill="#334155">Jul 24, 2026 — Jul 26, 2026</text>
+  <line x1="0" y1="244" x2="980" y2="244" stroke="#1E293B" stroke-width="1"/>
+  <text x="490" y="266" text-anchor="middle" font-size="11" fill="#475569" letter-spacing="0.5">Updated 2026-08-03 · jay-prajapati01 · github-actions</text>
 </svg>

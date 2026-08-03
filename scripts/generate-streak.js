@@ -8,10 +8,13 @@ const { processContributionData, formatDate } = require('./contribution-service'
 const { openCard, closeCard, createHeader, createFooter, COLORS, escapeXml } = require('./svg-utils');
 
 const WIDTH  = 980;
-const HEIGHT = 220;
+const HEIGHT = 280;
 const PAD    = 40;
 
-function iconContribution(x, y, color, scale = 2.2) {
+// ─── Icon functions (accept variable scale) ─────────────────────────────────
+
+function iconContribution(x, y, color, scale) {
+  // Native bounding: x 1–10, y 1–10 → ~11×11 native
   return `<g transform="translate(${x},${y}) scale(${scale})">
     <rect x="1" y="1" width="4" height="4" rx="0.5" fill="${color}" opacity="0.4"/>
     <rect x="6" y="1" width="4" height="4" rx="0.5" fill="${color}" opacity="0.7"/>
@@ -20,7 +23,8 @@ function iconContribution(x, y, color, scale = 2.2) {
   </g>`;
 }
 
-function iconFlame(x, y, color, scale = 2.2) {
+function iconFlame(x, y, color, scale) {
+  // Native bounding: x 4.5–8, y 1–8 → center-x ≈ 6.25, height ≈ 7
   return `<g transform="translate(${x},${y}) scale(${scale})">
     <path d="M6 1C6 1 4.5 3.5 4.5 5.5C4.5 6.5 5 7.5 6 8C5 7 4.8 5.5 5.5 4.5C5.5 4.5 6 6 7 6.5C7 6.5 8 5.5 8 4C8 2.5 6 1 6 1Z" fill="${color}">
       <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
@@ -28,11 +32,14 @@ function iconFlame(x, y, color, scale = 2.2) {
   </g>`;
 }
 
-function iconTrophy(x, y, color, scale = 2.2) {
+function iconTrophy(x, y, color, scale) {
+  // Native bounding: x 1–11, y 1–10 → ~10×9 native
   return `<g transform="translate(${x},${y}) scale(${scale})">
     <path d="M3 1h6v1h2v2c0 1-1 2-2 2h0c0 1-1 2-2 2v1h2v1H3v-1h2V6c-1 0-2-1-2-2H3c-1 0-2-1-2-2V2h2V1z" fill="${color}"/>
   </g>`;
 }
+
+// ─── SVG Builder ─────────────────────────────────────────────────────────────
 
 function buildStreakSVG(stats) {
   const today = new Date().toISOString().split('T')[0];
@@ -41,70 +48,96 @@ function buildStreakSVG(stats) {
 
   svg += createHeader(WIDTH, 'CONTRIBUTION.STREAK', today);
 
-  const colW     = Math.floor((WIDTH - PAD * 2) / 3);
-  const col1X    = PAD;
-  const col2X    = PAD + colW;
-  const col3X    = PAD + colW * 2;
-  
+  const colW  = Math.floor((WIDTH - PAD * 2) / 3);
+  const col1X = PAD;
+  const col2X = PAD + colW;
+  const col3X = PAD + colW * 2;
+
   const c1Mid = col1X + colW / 2;
   const c2Mid = col2X + colW / 2;
   const c3Mid = col3X + colW / 2;
 
+  // Vertical dividers
   svg += `
-  <line x1="${col2X}" y1="64" x2="${col2X}" y2="${HEIGHT - 50}" stroke="${COLORS.separator}" stroke-width="1"/>
-  <line x1="${col3X}" y1="64" x2="${col3X}" y2="${HEIGHT - 50}" stroke="${COLORS.separator}" stroke-width="1"/>`;
+  <line x1="${col2X}" y1="55" x2="${col2X}" y2="${HEIGHT - 42}" stroke="${COLORS.separator}" stroke-width="1"/>
+  <line x1="${col3X}" y1="55" x2="${col3X}" y2="${HEIGHT - 42}" stroke="${COLORS.separator}" stroke-width="1"/>`;
 
-  // Column 1: Total Contributions
-  const c1IconX = c1Mid - (11 * 2.2) / 2;
-  svg += iconContribution(c1IconX, 60, COLORS.accent, 2.2);
+  // ─── Column 1: Total Contributions ─────────────────────────────────────────
+  // Grid icon: scale 3.8 → rendered ~42×42
+  const gridScale = 3.8;
+  const gridW = 11 * gridScale; // ~41.8
+  const gridX = c1Mid - gridW / 2;
+  svg += iconContribution(gridX, 62, COLORS.accent, gridScale);
   svg += `
-  <text x="${c1Mid}" y="110" text-anchor="middle" font-size="36" fill="${COLORS.value}" font-weight="700">${stats.totalContributions}</text>
-  <text x="${c1Mid}" y="148" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">TOTAL CONTRIBUTIONS</text>
-  <text x="${c1Mid}" y="166" text-anchor="middle" font-size="10" fill="${COLORS.dim}">${stats.lastContributionDate ? 'Last: ' + escapeXml(formatDate(stats.lastContributionDate)) : '—'}</text>`;
+  <text x="${c1Mid}" y="142" text-anchor="middle" font-size="44" fill="${COLORS.value}" font-weight="700">${stats.totalContributions}</text>
+  <text x="${c1Mid}" y="176" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">TOTAL CONTRIBUTIONS</text>
+  <text x="${c1Mid}" y="196" text-anchor="middle" font-size="10" fill="${COLORS.dim}">${stats.lastContributionDate ? 'Last: ' + escapeXml(formatDate(stats.lastContributionDate)) : '—'}</text>`;
 
-  // Column 2: Current Streak
+  // ─── Column 2: Current Streak ──────────────────────────────────────────────
   const hasStreak = stats.currentStreak > 0;
-  
+
   if (hasStreak) {
-    // Enclosing circle ring: cx = c2Mid (490), cy = 92, r = 44
-    // Circumference = 2 * PI * 44 = ~276.46
+    const cx = c2Mid;
+    const cy = 118;
+    const r  = 50;
+    const strokeW = 6;
+    const circumference = Math.round(2 * Math.PI * r); // ~314
+
+    // Animated teal progress ring
     svg += `
-    <circle cx="${c2Mid}" cy="92" r="44" fill="none" stroke="#2DD4BF" stroke-width="5" stroke-dasharray="277" stroke-dashoffset="277" stroke-linecap="round">
-      <animate attributeName="stroke-dashoffset" from="277" to="0" dur="1s" fill="freeze" />
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#2DD4BF" stroke-width="${strokeW}" stroke-dasharray="${circumference}" stroke-dashoffset="${circumference}" stroke-linecap="round" opacity="0.95">
+      <animate attributeName="stroke-dashoffset" from="${circumference}" to="0" dur="1s" fill="freeze"/>
     </circle>`;
-    
-    // Flame icon positioned at the top of the ring (slightly overlapping upper edge)
-    // Horizontal center: 490 - (6.2 * 2.2) = 476.36
-    // Top of ring is 48. Align bottom of flame (native y=8) to 48: 48 - (8 * 2.2) = 30.4
-    const c2FlameX = c2Mid - 13.64;
-    svg += iconFlame(c2FlameX, 30.4, '#F97316', 2.2);
-    
+
+    // Flame: scale 3.2 → rendered ~11×22
+    // Position so the flame's vertical center sits at the circle's top edge
+    // Native center y ≈ 4.5, so translated center = y_t + 4.5*3.2
+    // Circle top = cy - r = 68. We want flame center at y=68:
+    // y_t + 14.4 = 68 → y_t = 53.6
+    // Native center x ≈ 6.25, translated center = x_t + 6.25*3.2
+    // We want center at cx: x_t + 20 = 490 → x_t = 470
+    const flameScale = 3.2;
+    const flameX = cx - 6.25 * flameScale;  // 470
+    const flameY = (cy - r) - 4.5 * flameScale + 6;  // 53.6 + slight nudge down
+    svg += iconFlame(flameX, flameY, '#F97316', flameScale);
+
+    // Number centered inside the ring
     svg += `
-    <text x="${c2Mid}" y="104" text-anchor="middle" font-size="36" fill="${COLORS.value}" font-weight="700">${stats.currentStreak}</text>
-    <text x="${c2Mid}" y="156" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">CURRENT STREAK</text>
-    <text x="${c2Mid}" y="174" text-anchor="middle" font-size="10" fill="${COLORS.dim}">${stats.currentStart ? escapeXml(formatDate(stats.currentStart)) + ' — ' + escapeXml(formatDate(stats.currentEnd)) : '—'}</text>`;
+    <text x="${cx}" y="${cy + 8}" text-anchor="middle" font-size="44" fill="${COLORS.value}" font-weight="700">${stats.currentStreak}</text>`;
+
+    // Label + date below the ring
+    svg += `
+    <text x="${c2Mid}" y="${cy + r + 26}" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">CURRENT STREAK</text>
+    <text x="${c2Mid}" y="${cy + r + 44}" text-anchor="middle" font-size="10" fill="${COLORS.dim}">${stats.currentStart ? escapeXml(formatDate(stats.currentStart)) + ' — ' + escapeXml(formatDate(stats.currentEnd)) : '—'}</text>`;
   } else {
-    // Normal layout if streak is 0 (no circle)
-    const c2FlameX = c2Mid - 13.64;
-    svg += iconFlame(c2FlameX, 60, '#F97316', 2.2);
+    // No streak → same layout as columns 1 & 3 (no ring)
+    const flameScale = 3.2;
+    const flameX = c2Mid - 6.25 * flameScale;
+    svg += iconFlame(flameX, 68, '#F97316', flameScale);
     svg += `
-    <text x="${c2Mid}" y="110" text-anchor="middle" font-size="36" fill="${COLORS.value}" font-weight="700">${stats.currentStreak}</text>
-    <text x="${c2Mid}" y="148" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">CURRENT STREAK</text>
-    <text x="${c2Mid}" y="166" text-anchor="middle" font-size="10" fill="${COLORS.dim}">${stats.currentStart ? escapeXml(formatDate(stats.currentStart)) + ' — ' + escapeXml(formatDate(stats.currentEnd)) : '—'}</text>`;
+    <text x="${c2Mid}" y="142" text-anchor="middle" font-size="44" fill="${COLORS.value}" font-weight="700">${stats.currentStreak}</text>
+    <text x="${c2Mid}" y="176" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">CURRENT STREAK</text>
+    <text x="${c2Mid}" y="196" text-anchor="middle" font-size="10" fill="${COLORS.dim}">${stats.currentStart ? escapeXml(formatDate(stats.currentStart)) + ' — ' + escapeXml(formatDate(stats.currentEnd)) : '—'}</text>`;
   }
 
-  // Column 3: Longest Streak
-  const c3IconX = c3Mid - (10 * 2.2) / 2;
-  svg += iconTrophy(c3IconX, 60, '#EAB308', 2.2);
+  // ─── Column 3: Longest Streak ──────────────────────────────────────────────
+  // Trophy icon: scale 3.5 → rendered ~35×31
+  const trophyScale = 3.5;
+  const trophyNativeW = 10;
+  const trophyX = c3Mid - (trophyNativeW * trophyScale) / 2;
+  svg += iconTrophy(trophyX, 65, '#EAB308', trophyScale);
   svg += `
-  <text x="${c3Mid}" y="110" text-anchor="middle" font-size="36" fill="${COLORS.value}" font-weight="700">${stats.longestStreak}</text>
-  <text x="${c3Mid}" y="148" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">LONGEST STREAK</text>
-  <text x="${c3Mid}" y="166" text-anchor="middle" font-size="10" fill="${COLORS.dim}">${stats.longestStart ? escapeXml(formatDate(stats.longestStart)) + ' — ' + escapeXml(formatDate(stats.longestEnd)) : '—'}</text>`;
+  <text x="${c3Mid}" y="142" text-anchor="middle" font-size="44" fill="${COLORS.value}" font-weight="700">${stats.longestStreak}</text>
+  <text x="${c3Mid}" y="176" text-anchor="middle" font-size="12" fill="${COLORS.label}" letter-spacing="1">LONGEST STREAK</text>
+  <text x="${c3Mid}" y="196" text-anchor="middle" font-size="10" fill="${COLORS.dim}">${stats.longestStart ? escapeXml(formatDate(stats.longestStart)) + ' — ' + escapeXml(formatDate(stats.longestEnd)) : '—'}</text>`;
 
+  // Footer
   svg += createFooter(WIDTH, HEIGHT, today);
   svg += closeCard();
   return svg;
 }
+
+// ─── Main ────────────────────────────────────────────────────────────────────
 
 async function generate() {
   console.log('[streak] Loading data…');
