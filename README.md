@@ -26,8 +26,7 @@
 
 <div align="center">
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/jay-prajapati-826902298)
-[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/techydosehub)
-[![Email](https://img.shields.io/badge/Email-09090B?style=for-the-badge&logo=gmail&logoColor=14B8A6&labelColor=09090B)](mailto:jay.190819@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/jay-prajapati-826902298) &nbsp;&nbsp;&nbsp;&nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/techydosehub) &nbsp;&nbsp;&nbsp;&nbsp; [![Email](https://img.shields.io/badge/Email-09090B?style=for-the-badge&logo=gmail&logoColor=14B8A6&labelColor=09090B)](mailto:jay.190819@gmail.com)
+
 
 </div>
