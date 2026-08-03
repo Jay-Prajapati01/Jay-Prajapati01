@@ -4,7 +4,7 @@ const COLORS = {
   bg:          '#09090B',
   surface:     '#0F172A',
   border:      '#1E293B',
-  accent:      '#22D3EE',
+  accent:      '#2DD4BF',
   accentMuted: '#0E7490',
   positive:    '#14B8A6',
   label:       '#64748B',
@@ -67,6 +67,25 @@ function openCard(width, height) {
       ${FONT_FACE}
       text { font-family: ${FONT}; }
     </style>
+    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06B6D4" />
+      <stop offset="50%" stop-color="#2DD4BF" />
+      <stop offset="100%" stop-color="#34D399" />
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="ringGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
   <!-- Card background -->
   <rect width="${width}" height="${height}" rx="16" fill="${COLORS.bg}"/>
