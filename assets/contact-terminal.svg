@@ -13,8 +13,8 @@
   <!-- Terminal Header -->
   <text x="490" y="32" text-anchor="middle" font-size="16" fill="#94A3B8" letter-spacing="0.5">./connect.sh</text>
 
-  <circle cx="936" cy="24" r="6" fill="#10B981"/>
-  <text x="950" y="28" font-size="13" fill="#10B981" letter-spacing="1">LIVE</text>
+  <circle cx="936" cy="24" r="6" fill="#14B8A6"/>
+  <text x="950" y="28" font-size="13" fill="#14B8A6" letter-spacing="1">LIVE</text>
 
   <!-- Header Separator -->
   <line x1="0" y1="48" x2="980" y2="48" stroke="#334155" stroke-width="0.5"/>

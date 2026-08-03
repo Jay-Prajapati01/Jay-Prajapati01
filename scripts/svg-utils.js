@@ -4,7 +4,7 @@ const COLORS = {
   header: '#22D3EE',
   label: '#94A3B8',
   value: '#F8FAFC',
-  accent: '#10B981',
+  accent: '#14B8A6',
   separator: '#334155'
 };
 
