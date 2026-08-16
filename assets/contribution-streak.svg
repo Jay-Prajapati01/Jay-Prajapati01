@@ -40,16 +40,19 @@
     <rect x="1" y="6" width="4" height="4" rx="0.5" fill="#2DD4BF"/>
     <rect x="6" y="6" width="4" height="4" rx="0.5" fill="#2DD4BF" opacity="0.5"/>
   </g>
-  <text x="190" y="142" text-anchor="middle" font-size="44" fill="#F1F5F9" font-weight="700">145</text>
+  <text x="190" y="142" text-anchor="middle" font-size="44" fill="#F1F5F9" font-weight="700">152</text>
   <text x="190" y="176" text-anchor="middle" font-size="12" fill="#64748B" letter-spacing="1">TOTAL CONTRIBUTIONS</text>
-  <text x="190" y="196" text-anchor="middle" font-size="10" fill="#334155">Last: Aug 14, 2026</text><g transform="translate(470,68) scale(3.2)">
+  <text x="190" y="196" text-anchor="middle" font-size="10" fill="#334155">Last: Aug 16, 2026</text>
+    <path d="M 505.45 70.45 A 50 50 0 1 1 474.55 70.45" fill="none" stroke="#2DD4BF" stroke-width="6" stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round" opacity="0.95">
+      <animate attributeName="stroke-dashoffset" from="283" to="0" dur="1s" fill="freeze"/>
+    </path><g transform="translate(470,53.6) scale(3.2)">
     <path d="M6 1C6 1 4.5 3.5 4.5 5.5C4.5 6.5 5 7.5 6 8C5 7 4.8 5.5 5.5 4.5C5.5 4.5 6 6 7 6.5C7 6.5 8 5.5 8 4C8 2.5 6 1 6 1Z" fill="#F97316">
       <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
     </path>
   </g>
-    <text x="490" y="142" text-anchor="middle" font-size="44" fill="#F1F5F9" font-weight="700">0</text>
-    <text x="490" y="176" text-anchor="middle" font-size="12" fill="#64748B" letter-spacing="1">CURRENT STREAK</text>
-    <text x="490" y="196" text-anchor="middle" font-size="10" fill="#334155">—</text><g transform="translate(763.6,52) scale(2.2)" fill="#EAB308">
+    <text x="490" y="126" text-anchor="middle" font-size="44" fill="#F1F5F9" font-weight="700">1</text>
+    <text x="490" y="194" text-anchor="middle" font-size="12" fill="#64748B" letter-spacing="1">CURRENT STREAK</text>
+    <text x="490" y="212" text-anchor="middle" font-size="10" fill="#334155">Aug 16, 2026 — Aug 16, 2026</text><g transform="translate(763.6,52) scale(2.2)" fill="#EAB308">
     <!-- Left Handle -->
     <path d="M2 3c0-1.1.9-2 2-2h2v6H4c-1.1 0-2-.9-2-2V3z" opacity="0.8" />
     <!-- Right Handle -->
