@@ -40,9 +40,9 @@
   <rect x="32" y="128" width="431" height="4" rx="2" fill="#334155"/>
   <rect x="32" y="128" width="431" height="4" rx="2" fill="#0E7490"/>
   <text x="32" y="165" font-size="14" fill="#64748B">Public Repositories</text>
-  <text x="463" y="165" font-size="15" fill="#F1F5F9" font-weight="600" text-anchor="end">23</text>
+  <text x="463" y="165" font-size="15" fill="#F1F5F9" font-weight="600" text-anchor="end">24</text>
   <rect x="32" y="171" width="431" height="4" rx="2" fill="#334155"/>
-  <rect x="32" y="171" width="49.31840796019901" height="4" rx="2" fill="#0E7490"/>
+  <rect x="32" y="171" width="51.46268656716418" height="4" rx="2" fill="#0E7490"/>
   <text x="32" y="208" font-size="14" fill="#64748B">Total Stars Earned</text>
   <text x="463" y="208" font-size="15" fill="#F1F5F9" font-weight="600" text-anchor="end">1</text>
   <rect x="32" y="214" width="431" height="4" rx="2" fill="#334155"/>
